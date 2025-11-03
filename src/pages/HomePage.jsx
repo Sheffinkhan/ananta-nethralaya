@@ -6,7 +6,7 @@ import { ChevronRight, ChevronDown, Users, Award, Heart, Eye } from "lucide-reac
 import { Link } from "../utils/Router"
 import homeData from "../constants/home.json";
 
-const staticContent = homeData.PROJECT.HOME;
+const staticContent = homeData.HOME;
 
 
 const HomePage = () => {
