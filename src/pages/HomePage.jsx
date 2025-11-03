@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import SEO from "../components/SEO"
 import { ChevronRight, ChevronDown, Users, Award, Heart, Eye } from "lucide-react"
 import { Link } from "../utils/Router"
+import { PROJECT } from "../contants/home.json";
+  const staticContent = PROJECT.HOME;
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -21,8 +23,8 @@ const HomePage = () => {
 
   const services = [
     {
-      title: "Premium Cataract Surgery",
-      description: "Advanced micro-incision cataract surgery with premium IOL options.",
+      title: staticContent.premiumCataractSurgery,
+      description: staticContent.premiumCataractSurgery_description,
       icon: "👁️",
     },
     {
