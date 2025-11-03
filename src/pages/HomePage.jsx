@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import SEO from "../components/SEO"
 import { ChevronRight, ChevronDown, Users, Award, Heart, Eye } from "lucide-react"
 import { Link } from "../utils/Router"
-import { PROJECT } from "../contants/home.json";
+import { PROJECT } from "../constants/home.json";
   const staticContent = PROJECT.HOME;
 
 const HomePage = () => {
