@@ -18,7 +18,37 @@ const ContactPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    // Handle form submission logic here
+
+    // Validate required fields
+    if (!formData.fullName || !formData.phone || !formData.service) {
+      alert("Please fill in all required fields (Full Name, Phone Number, and Service)")
+      return
+    }
+
+    // Create formatted message for WhatsApp
+    const whatsappMessage = `*Appointment Request - Ananta Nethralaya*
+
+*Personal Information:*
+Name: ${formData.fullName}
+Phone: ${formData.phone}
+Email: ${formData.email || "Not provided"}
+Gender: ${formData.gender || "Not provided"}
+Age: ${formData.age || "Not provided"}
+
+*Appointment Details:*
+Service: ${formData.service}
+Preferred Date: ${formData.date || "Flexible"}
+Message: ${formData.message || "No additional message"}
+
+Please confirm this appointment.`
+
+    // Create WhatsApp link with pre-filled message
+    const whatsappNumber = "917025195638"
+    const encodedMessage = encodeURIComponent(whatsappMessage)
+    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`
+
+    // Open WhatsApp in new window
+    window.open(whatsappURL, "_blank")
   }
 
   const handleChange = (event) => {
@@ -228,8 +258,21 @@ const ContactPage = () => {
                         name="gender"
                         value={formData.gender}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 focus:scale-105"
-                      ></select>
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 focus:scale-105 text-black bg-white"
+                      >
+                        <option value="" hidden className="text-gray-400">
+                          Select Gender
+                        </option>
+                        <option value="male" className="text-black bg-white">
+                          Male
+                        </option>
+                        <option value="female" className="text-black bg-white">
+                          Female
+                        </option>
+                        <option value="other" className="text-black bg-white">
+                          Other
+                        </option>
+                      </select>
                     </div>
 
                     <div>
@@ -255,9 +298,43 @@ const ContactPage = () => {
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 focus:scale-105"
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 focus:scale-105 text-black bg-white"
                       required
-                    ></select>
+                    >
+                      <option value="" hidden className="text-gray-400">
+                        Choose a Service
+                      </option>
+                      <option value="General Eye Consultation" className="text-black bg-white">
+                        General Eye Consultation
+                      </option>
+                      <option value="Cataract Surgery" className="text-black bg-white">
+                        Cataract Surgery
+                      </option>
+                      <option value="Glaucoma Treatment" className="text-black bg-white">
+                        Glaucoma Treatment
+                      </option>
+                      <option value="Retina Services" className="text-black bg-white">
+                        Retina Services
+                      </option>
+                      <option value="Pediatric Ophthalmology" className="text-black bg-white">
+                        Pediatric Ophthalmology
+                      </option>
+                      <option value="Cornea Services" className="text-black bg-white">
+                        Cornea Services
+                      </option>
+                      <option value="LASIK & Refractive Surgery" className="text-black bg-white">
+                        LASIK & Refractive Surgery
+                      </option>
+                      <option value="Comprehensive Eye Check-up" className="text-black bg-white">
+                        Comprehensive Eye Check-up
+                      </option>
+                      <option value="Emergency Eye Care" className="text-black bg-white">
+                        Emergency Eye Care
+                      </option>
+                      <option value="Other" className="text-black bg-white">
+                        Other
+                      </option>
+                    </select>
                   </div>
 
                   <div className="animate-slide-in-left" style={{ animationDelay: "0.8s" }}>
