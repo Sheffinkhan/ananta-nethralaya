@@ -16,6 +16,13 @@ const HomePage = () => {
     setIsVisible(true)
   }, [])
 
+  const handleScrollDown = () => {
+    const statsSection = document.querySelector(".stats-section")
+    if (statsSection) {
+      statsSection.scrollIntoView({ behavior: "smooth" })
+    }
+  }
+
   const stats = [
     { icon: Users, value: "5000+", label: "Happy Patients" },
     { icon: Award, value: "15+", label: "Years Experience" },
@@ -127,12 +134,15 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:scale-110 transition-transform"
+          onClick={handleScrollDown}
+        >
           <ChevronDown className="text-white" size={32} />
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-r from-teal-700 to-teal-800">
+      <section className="stats-section py-20 bg-gradient-to-r from-teal-700 to-teal-800">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, idx) => {

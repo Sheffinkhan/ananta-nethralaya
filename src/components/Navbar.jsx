@@ -1,31 +1,79 @@
-//src/components/Navbar.jsx
 "use client"
 
 import { useState, useEffect } from "react"
-import { Eye, Menu, X } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { Link } from "../utils/Router"
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [currentPath, setCurrentPath] = useState(window.location.hash.slice(1) || "/")
+  const [currentPath, setCurrentPath] = useState("")
+
+  // Function to get current path from URL
+  const getCurrentPath = () => {
+    const hash = window.location.hash
+    if (hash) {
+      return hash.slice(1) // Remove the # and return
+    }
+    return window.location.pathname
+  }
+
+  // Initialize current path
+  useEffect(() => {
+    setCurrentPath(getCurrentPath())
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
     }
-    
-    // Update current path when it changes
-    const handleLocationChange = () => {
-      setCurrentPath(window.location.hash.slice(1) || "/")
-    }
-    
     window.addEventListener("scroll", handleScroll)
-    window.addEventListener("hashchange", handleLocationChange)
-    
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  useEffect(() => {
+    // Handle hash changes
+    const handleHashChange = () => {
+      const newPath = getCurrentPath()
+      console.log("Hash changed to:", newPath)
+      setCurrentPath(newPath)
+    }
+
+    // Handle popstate (back/forward buttons)
+    const handlePopState = () => {
+      const newPath = getCurrentPath()
+      console.log("PopState changed to:", newPath)
+      setCurrentPath(newPath)
+    }
+
+    // Handle custom route change events
+    const handleRouteChange = (e) => {
+      console.log("RouteChange event:", e.detail?.path)
+      if (e.detail?.path) {
+        setCurrentPath(e.detail.path)
+      }
+    }
+
+    window.addEventListener("hashchange", handleHashChange)
+    window.addEventListener("popstate", handlePopState)
+    window.addEventListener("routechange", handleRouteChange)
+
+    // Also listen for click events on the document to catch Link clicks
+    const handleClick = () => {
+      setTimeout(() => {
+        const newPath = getCurrentPath()
+        console.log("Click detected, path:", newPath)
+        setCurrentPath(newPath)
+      }, 10)
+    }
+
+    document.addEventListener("click", handleClick)
+
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-      window.removeEventListener("hashchange", handleLocationChange)
+      window.removeEventListener("hashchange", handleHashChange)
+      window.removeEventListener("popstate", handlePopState)
+      window.removeEventListener("routechange", handleRouteChange)
+      document.removeEventListener("click", handleClick)
     }
   }, [])
 
@@ -38,6 +86,18 @@ const Navbar = () => {
     { name: "Contact", path: "/contact" },
   ]
 
+  const isActive = (path) => {
+    console.log("Checking active - Link path:", path, "Current path:", currentPath)
+    
+    // Exact match for home
+    if (path === "/" && currentPath === "/") return true
+    
+    // For other paths, check if current path matches exactly
+    if (path !== "/" && currentPath === path) return true
+    
+    return false
+  }
+
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-500 ${
@@ -46,8 +106,12 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link to="/" className="flex items-center space-x-3 group">
-          <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-800 rounded-full flex items-center justify-center group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
-            <Eye className="text-amber-400 group-hover:rotate-12 transition-transform duration-300" size={24} />
+          <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-800 rounded-full flex items-center justify-center group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 overflow-hidden">
+            <img
+              src="/Logo.jpg"
+              alt="Ananta Nethralaya Logo"
+              className="w-full h-full object-cover group-hover:rotate-12 transition-transform duration-300"
+            />
           </div>
           <div>
             <h1 className="text-lg font-bold bg-gradient-to-r from-teal-700 to-teal-900 bg-clip-text text-transparent">
@@ -60,16 +124,16 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-1">
           {navLinks.map((link, idx) => {
-            const isActive = currentPath === link.path
+            const active = isActive(link.path)
             return (
               <Link
                 key={link.name}
                 to={link.path}
-                onClick={() => setCurrentPath(link.path)}
+                onClick={() => {
+                  setTimeout(() => setCurrentPath(link.path), 10)
+                }}
                 className={`font-medium px-4 py-2 rounded-lg transition-all duration-300 relative group ${
-                  isActive
-                    ? "text-teal-700 bg-teal-50"
-                    : "text-gray-700 hover:text-teal-700"
+                  active ? "text-teal-700 bg-teal-50 font-bold" : "text-gray-700 hover:text-teal-700"
                 }`}
                 style={{
                   animation: `slideInDown 0.5s ease-out ${idx * 0.1}s both`,
@@ -78,7 +142,7 @@ const Navbar = () => {
                 {link.name}
                 <span
                   className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-teal-600 to-amber-500 transition-all duration-300 ${
-                    isActive ? "w-full" : "w-0 group-hover:w-full"
+                    active ? "w-full" : "w-0 group-hover:w-full"
                   }`}
                 ></span>
               </Link>
@@ -110,20 +174,20 @@ const Navbar = () => {
         <div className="lg:hidden bg-white shadow-2xl animate-in fade-in slide-in-from-top-2 duration-300">
           <div className="flex flex-col space-y-2 p-6">
             {navLinks.map((link, idx) => {
-              const isActive = currentPath === link.path
+              const active = isActive(link.path)
               return (
                 <Link
                   key={link.name}
                   to={link.path}
-                  onClick={() => {
-                    setCurrentPath(link.path)
-                    setIsMobileMenuOpen(false)
-                  }}
                   className={`font-medium px-4 py-3 rounded-lg transition-all duration-300 ${
-                    isActive
-                      ? "text-teal-700 bg-teal-50 border-l-4 border-teal-600"
+                    active
+                      ? "text-teal-700 bg-teal-50 font-bold border-l-4 border-teal-600"
                       : "text-gray-700 hover:text-teal-700 hover:bg-teal-50"
                   }`}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false)
+                    setTimeout(() => setCurrentPath(link.path), 10)
+                  }}
                   style={{
                     animation: `slideInLeft 0.3s ease-out ${idx * 0.05}s both`,
                   }}
