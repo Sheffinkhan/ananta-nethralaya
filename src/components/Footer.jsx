@@ -1,4 +1,4 @@
-import { Eye, Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Clock } from "lucide-react"
+import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Clock } from "lucide-react"
 import { Link } from "../utils/Router"
 
 const Footer = () => {
@@ -9,8 +9,12 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3 group">
-              <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-800 rounded-full flex items-center justify-center group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
-                <Eye className="text-amber-400 group-hover:rotate-12 transition-transform duration-300" size={24} />
+              <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-800 rounded-full flex items-center justify-center group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 overflow-hidden">
+                <img
+                  src="/Logo2.png"
+                  alt="Ananta Nethralaya Logo"
+                  className="w-full h-full object-cover group-hover:rotate-12 transition-transform duration-300"
+                />
               </div>
               <div>
                 <h3 className="text-lg font-bold">ANANTA NETHRALAYA</h3>
@@ -172,4 +176,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default Footer;

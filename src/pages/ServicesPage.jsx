@@ -1,52 +1,9 @@
 import { ChevronRight } from "lucide-react"
 import { Link } from "../utils/Router"
 import SEO from "../components/SEO"
-
+import  CLINIC_CONTENT  from "../constants/content"
 const ServicesPage = () => {
-  const services = [
-    {
-      title: "Premium Cataract Surgery",
-      description:
-        "Advanced micro-incision cataract surgery with premium IOL options for crystal clear vision. We use the latest phacoemulsification technology for faster recovery.",
-      icon: "👁️",
-      features: ["Micro-incision surgery", "Premium IOL options", "Same-day discharge", "Quick recovery"],
-    },
-    {
-      title: "Sutureless Retina Surgery",
-      description:
-        "Cutting-edge retinal treatments including vitrectomy and laser procedures for retinal disorders with minimal invasiveness.",
-      icon: "🔬",
-      features: ["23G/25G Vitrectomy", "Retinal detachment repair", "Macular hole surgery", "Laser treatments"],
-    },
-    {
-      title: "Comprehensive Eye Care",
-      description:
-        "Complete eye examinations, vision testing, and preventive care for all age groups with detailed assessments.",
-      icon: "✨",
-      features: ["Complete eye exams", "Vision testing", "Pediatric eye care", "Geriatric care"],
-    },
-    {
-      title: "Diabetic Retinopathy Care",
-      description:
-        "Specialized screening, monitoring, and treatment for diabetes-related eye complications to prevent vision loss.",
-      icon: "💉",
-      features: ["Retinal screening", "Laser photocoagulation", "Anti-VEGF injections", "Regular monitoring"],
-    },
-    {
-      title: "Glaucoma Management",
-      description:
-        "Advanced diagnosis and treatment of glaucoma to prevent vision loss and preserve sight with comprehensive care.",
-      icon: "🎯",
-      features: ["IOP monitoring", "Medical management", "Laser treatments", "Surgical options"],
-    },
-    {
-      title: "Corneal Treatments",
-      description:
-        "Expert management of corneal diseases, infections, and injuries with modern techniques and therapies.",
-      icon: "💎",
-      features: ["Corneal ulcer treatment", "Keratoconus management", "Dry eye therapy", "Pterygium surgery"],
-    },
-  ]
+  const services = CLINIC_CONTENT.services
 
   return (
     <>
@@ -111,6 +68,19 @@ const ServicesPage = () => {
           </div>
         </section>
       </div>
+
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </>
   )
 }

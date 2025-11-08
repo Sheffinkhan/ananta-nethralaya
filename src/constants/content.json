@@ -1,0 +1,110 @@
+{
+  "about": {
+    "title": "Your Vision, Our Priority",
+    "description": "At Ananta Nethralaya, we bring together advanced technology, surgical precision, and compassionate care to deliver world-class eye treatment in a comforting environment.",
+    "shortDescription": "Led by Dr. Ashwin C. Somarajan, an experienced vitreoretinal and Cataract surgeon with over 8 years of expertise in ophthalmology, our mission is to make quality eye care accessible and trustworthy for every patient.",
+    "tagline": "From routine consultations to advanced cataract and retina surgeries, we are dedicated to preserving and restoring sight — because every vision deserves clarity."
+  },
+  "whyChooseUs": [
+    {
+      "title": "8+ Years of Experience",
+      "description": "Backed by years of clinical and surgical expertise in ophthalmology and retina care."
+    },
+    {
+      "title": "Trusted Eye Care Since 2025",
+      "description": "A new beginning built on a foundation of experience, precision, and trust."
+    },
+    {
+      "title": "Comprehensive Eye Solutions",
+      "description": "Offering a full spectrum of services — Cataract, Retina, Glaucoma, Uvea, Neuro-Ophthalmology, trauma care & comprehensive Eye Care."
+    },
+    {
+      "title": "Patient-Centered Care",
+      "description": "Each patient is treated with empathy, transparency, and the highest ethical standards."
+    },
+    {
+      "title": "Cutting-Edge Technology",
+      "description": "Equipped with modern diagnostics and surgical systems for precise and painless outcomes."
+    }
+  ],
+  "doctor": {
+    "name": "Dr. Ashwin C. Somarajan",
+    "qualifications": "MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS - Cornea, Cataract & Retina Surgeon",
+    "experience": "8+ years of expertise in ophthalmology and retina care",
+    "specialty": "Vitreoretinal and Cataract surgeon"
+  },
+  "services": [
+    {
+      "title": "Premium Cataract Surgery",
+      "description": "Advanced micro-incision cataract surgery with premium IOL options for crystal clear vision.",
+      "fullDescription": "We use the latest phacoemulsification technology for faster recovery.",
+      "features": [
+        "Micro-incision surgery",
+        "Premium IOL options",
+        "Same-day discharge",
+        "Quick recovery"
+      ],
+      "icon": "👁️"
+    },
+    {
+      "title": "Sutureless Retina Surgery",
+      "description": "Cutting-edge retinal treatments including vitrectomy and laser procedures.",
+      "fullDescription": "Minimal invasiveness with maximum precision.",
+      "features": [
+        "23G/25G Vitrectomy",
+        "Retinal detachment repair",
+        "Macular hole surgery",
+        "Laser treatments"
+      ],
+      "icon": "🔬"
+    },
+    {
+      "title": "Comprehensive Eye Care",
+      "description": "Complete eye examinations, vision testing, and preventive care for all age groups.",
+      "fullDescription": "Detailed assessments for optimal eye health.",
+      "features": [
+        "Complete eye exams",
+        "Vision testing",
+        "Pediatric eye care",
+        "Geriatric care"
+      ],
+      "icon": "✨"
+    },
+    {
+      "title": "Diabetic Retinopathy Care",
+      "description": "Specialized screening and treatment for diabetes-related eye complications.",
+      "fullDescription": "Preventing vision loss with expert management.",
+      "features": [
+        "Retinal screening",
+        "Laser photocoagulation",
+        "Anti-VEGF injections",
+        "Regular monitoring"
+      ],
+      "icon": "💉"
+    },
+    {
+      "title": "Glaucoma Management",
+      "description": "Advanced diagnosis and treatment of glaucoma to prevent vision loss.",
+      "fullDescription": "Comprehensive care to protect your vision.",
+      "features": [
+        "IOP monitoring",
+        "Medical management",
+        "Laser treatments",
+        "Surgical options"
+      ],
+      "icon": "🎯"
+    },
+    {
+      "title": "Uvea & Neuro-Ophthalmology",
+      "description": "Specialized treatment for uveal diseases and neuro-ophthalmological conditions.",
+      "fullDescription": "Expert management of complex eye conditions.",
+      "features": [
+        "Uveal disorder treatment",
+        "Neuro-ophthalmology consultation",
+        "Advanced diagnostics",
+        "Trauma care"
+      ],
+      "icon": "💎"
+    }
+  ]
+}

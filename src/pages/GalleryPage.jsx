@@ -1,3 +1,4 @@
+// src/pages/GalleryPage.jsx
 "use client"
 
 import { useState } from "react"
