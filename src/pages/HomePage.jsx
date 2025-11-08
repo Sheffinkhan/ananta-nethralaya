@@ -4,11 +4,7 @@ import { useEffect, useState } from "react"
 import SEO from "../components/SEO"
 import { ChevronRight, ChevronDown, Users, Award, Heart, Eye } from "lucide-react"
 import { Link } from "../utils/Router"
-import homeData from "../constants/home.json";
-
-const staticContent = homeData.HOME;
-
-
+import  CLINIC_CONTENT  from "../constants/content"
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -25,33 +21,12 @@ const HomePage = () => {
 
   const stats = [
     { icon: Users, value: "5000+", label: "Happy Patients" },
-    { icon: Award, value: "15+", label: "Years Experience" },
+    { icon: Award, value: "8+", label: "Years Experience" },
     { icon: Heart, value: "99%", label: "Success Rate" },
-    { icon: Eye, value: "20+", label: "Specialized Services" },
+    { icon: Eye, value: "6+", label: "Specialized Services" },
   ]
 
-  const services = [
-    {
-      title: staticContent.premiumCataractSurgery,
-      description: staticContent.premiumCataractSurgery_description,
-      icon: "👁️",
-    },
-    {
-      title: "Sutureless Retina Surgery",
-      description: "Cutting-edge retinal treatments including vitrectomy and laser procedures.",
-      icon: "🔬",
-    },
-    {
-      title: "Diabetic Retinopathy Care",
-      description: "Specialized screening and treatment for diabetes-related eye complications.",
-      icon: "💉",
-    },
-    {
-      title: "Comprehensive Eye Care",
-      description: "Complete eye examinations and preventive care for all age groups.",
-      icon: "✨",
-    },
-  ]
+  const services = CLINIC_CONTENT.services.slice(0, 4)
 
   return (
     <>
@@ -94,10 +69,10 @@ const HomePage = () => {
                 animation: `fadeInUp 1s ease-out 0.2s both`,
               }}
             >
-              Your Vision,
+              {CLINIC_CONTENT.about.title.split(",")[0]},
               <br />
               <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
-                Our Priority
+                {CLINIC_CONTENT.about.title.split(",")[1]}
               </span>
             </h1>
 
@@ -107,8 +82,7 @@ const HomePage = () => {
                 animation: `fadeInUp 1s ease-out 0.4s both`,
               }}
             >
-              Expert eye care services with state-of-the-art technology and compassionate treatment. Experience
-              world-class cataract and retina care.
+              {CLINIC_CONTENT.about.description}
             </p>
 
             <div
@@ -215,15 +189,9 @@ const HomePage = () => {
           <div className="max-w-5xl mx-auto bg-gradient-to-br from-teal-700 via-teal-800 to-teal-900 rounded-3xl shadow-2xl overflow-hidden">
             <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12 items-center">
               <div className="text-white">
-                <h2 className="text-4xl font-bold mb-4">Meet Dr. Ashwin C Somarajan</h2>
-                <p className="text-gray-200 mb-4 leading-relaxed font-medium">
-                  MBBS, DNB Ophthalmology (Sankara Nethralaya)
-                  <br />
-                  MNAMS, FVRS - Cornea, Cataract & Retina Surgeon
-                </p>
-                <p className="text-gray-300 mb-6 leading-relaxed">
-                  15+ years of experience in providing world-class eye care with a patient-first approach.
-                </p>
+                <h2 className="text-4xl font-bold mb-4">Meet {CLINIC_CONTENT.doctor.name}</h2>
+                <p className="text-gray-200 mb-4 leading-relaxed font-medium">{CLINIC_CONTENT.doctor.qualifications}</p>
+                <p className="text-gray-300 mb-6 leading-relaxed">{CLINIC_CONTENT.doctor.experience}</p>
                 <Link
                   to="/doctors"
                   className="inline-flex items-center bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-3 rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 font-semibold"

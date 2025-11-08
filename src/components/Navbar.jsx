@@ -108,7 +108,7 @@ const Navbar = () => {
         <Link to="/" className="flex items-center space-x-3 group">
           <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-800 rounded-full flex items-center justify-center group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 overflow-hidden">
             <img
-              src="/Logo.jpg"
+              src="/Logo2.png"
               alt="Ananta Nethralaya Logo"
               className="w-full h-full object-cover group-hover:rotate-12 transition-transform duration-300"
             />
