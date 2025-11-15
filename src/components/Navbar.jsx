@@ -9,16 +9,14 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [currentPath, setCurrentPath] = useState("")
 
-  // Function to get current path from URL
   const getCurrentPath = () => {
     const hash = window.location.hash
     if (hash) {
-      return hash.slice(1) // Remove the # and return
+      return hash.slice(1)
     }
     return window.location.pathname
   }
 
-  // Initialize current path
   useEffect(() => {
     setCurrentPath(getCurrentPath())
   }, [])
@@ -32,21 +30,18 @@ const Navbar = () => {
   }, [])
 
   useEffect(() => {
-    // Handle hash changes
     const handleHashChange = () => {
       const newPath = getCurrentPath()
       console.log("Hash changed to:", newPath)
       setCurrentPath(newPath)
     }
 
-    // Handle popstate (back/forward buttons)
     const handlePopState = () => {
       const newPath = getCurrentPath()
       console.log("PopState changed to:", newPath)
       setCurrentPath(newPath)
     }
 
-    // Handle custom route change events
     const handleRouteChange = (e) => {
       console.log("RouteChange event:", e.detail?.path)
       if (e.detail?.path) {
@@ -58,7 +53,6 @@ const Navbar = () => {
     window.addEventListener("popstate", handlePopState)
     window.addEventListener("routechange", handleRouteChange)
 
-    // Also listen for click events on the document to catch Link clicks
     const handleClick = () => {
       setTimeout(() => {
         const newPath = getCurrentPath()
@@ -88,13 +82,10 @@ const Navbar = () => {
 
   const isActive = (path) => {
     console.log("Checking active - Link path:", path, "Current path:", currentPath)
-    
-    // Exact match for home
+
     if (path === "/" && currentPath === "/") return true
-    
-    // For other paths, check if current path matches exactly
     if (path !== "/" && currentPath === path) return true
-    
+
     return false
   }
 
@@ -105,19 +96,24 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-3 group">
-          <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-800 rounded-full flex items-center justify-center group-hover:shadow-lg group-hover:scale-110 transition-all duration-300 overflow-hidden">
-            <img
-              src="/Logo2.png"
-              alt="Ananta Nethralaya Logo"
-              className="w-full h-full object-cover group-hover:rotate-12 transition-transform duration-300"
-            />
-          </div>
-          <div>
-            <h1 className="text-lg font-bold bg-gradient-to-r from-teal-700 to-teal-900 bg-clip-text text-transparent">
-              ANANTA NETHRALAYA
-            </h1>
-            <p className="text-xs text-gray-500 font-medium">Your Vision, Our Priority</p>
+        {/* Logo Section with Brand Name */}
+        <Link to="/" className="flex items-center gap-3 lg:gap-4 group">
+          {/* Main vertical logo with mix-blend-multiply to remove white background */}
+          <img
+            src="ANlogo-removebg-preview.png"
+            alt="Ananta Nethralaya Logo"
+            className="h-12 md:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+            style={{ mixBlendMode: 'multiply' }}
+          />
+
+          {/* Brand Name - Visible on all screens */}
+          <div className="flex flex-col">
+            <span className="text-teal-700 font-bold text-lg md:text-xl lg:text-2xl leading-tight group-hover:text-teal-800 transition-colors">
+              Ananta Nethralaya
+            </span>
+            <span className="text-gray-600 text-xs md:text-sm font-medium">
+              Super Speciality Eye Centre
+            </span>
           </div>
         </Link>
 
@@ -160,6 +156,7 @@ const Navbar = () => {
         <button
           className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-all duration-300"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
         >
           {isMobileMenuOpen ? (
             <X className="text-teal-700 animate-spin" size={24} />
