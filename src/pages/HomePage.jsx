@@ -6,8 +6,7 @@ import { ChevronRight, ChevronDown, Users, Award, Heart, Eye, Microscope, Activi
 import { Link } from "../utils/Router"
 import  CLINIC_CONTENT  from "../constants/content"
 import Navbar from "../components/Navbar"
-import Footer from "../components/Footer"
-import WhatsAppButton from "../components/WhatsAppButton"
+
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
