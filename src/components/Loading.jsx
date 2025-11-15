@@ -1,3 +1,4 @@
+// src/components/Loading.jsx
 import { Eye } from "lucide-react"
 
 const Loading = () => {

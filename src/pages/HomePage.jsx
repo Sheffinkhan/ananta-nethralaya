@@ -2,9 +2,13 @@
 
 import { useEffect, useState } from "react"
 import SEO from "../components/SEO"
-import { ChevronRight, ChevronDown, Users, Award, Heart, Eye } from "lucide-react"
+import { ChevronRight, ChevronDown, Users, Award, Heart, Eye, Microscope, Activity, Flame } from "lucide-react"
 import { Link } from "../utils/Router"
 import  CLINIC_CONTENT  from "../constants/content"
+import Navbar from "../components/Navbar"
+import Footer from "../components/Footer"
+import WhatsAppButton from "../components/WhatsAppButton"
+
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -26,7 +30,11 @@ const HomePage = () => {
     { icon: Eye, value: "6+", label: "Specialized Services" },
   ]
 
-  const services = CLINIC_CONTENT.services.slice(0, 4)
+  const serviceIcons = [Eye, Microscope, Activity, Flame];
+  const services = CLINIC_CONTENT.services.slice(0, 4).map((service, idx) => ({
+    ...service,
+    iconComponent: serviceIcons[idx]
+  }));
 
   return (
     <>
@@ -37,6 +45,7 @@ const HomePage = () => {
         ogImage="/logo.png"
         canonical="https://www.anantanethralaya.org/"
       />
+      <Navbar />
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-teal-900 to-slate-900 overflow-hidden pt-20">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-72 h-72 bg-teal-500 rounded-full blur-3xl animate-pulse"></div>
@@ -57,11 +66,7 @@ const HomePage = () => {
               style={{
                 animation: `fadeInDown 0.8s ease-out`,
               }}
-            >
-              {/* <div className="inline-block bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
-                Premium Eye Care Center
-              </div> */}
-            </div>
+            ></div>
 
             <h1
               className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
@@ -153,23 +158,25 @@ const HomePage = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, idx) => (
-              <div
-                key={idx}
-                className="bg-gradient-to-br from-teal-50 to-amber-50 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 group cursor-pointer border border-teal-100 hover:border-amber-300"
-                style={{
-                  animation: `fadeInUp 0.8s ease-out ${idx * 0.15}s both`,
-                }}
-              >
-                <div className="text-5xl mb-4 group-hover:scale-125 transition-transform duration-300 inline-block">
-                  {service.icon}
-                </div>
+            {services.map((service, idx) => {
+              const IconComponent = service.iconComponent;
+              return (
+                <div
+                  key={idx}
+                  className="bg-gradient-to-br from-teal-50 to-amber-50 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 group cursor-pointer border border-teal-100 hover:border-amber-300"
+                  style={{
+                    animation: `fadeInUp 0.8s ease-out ${idx * 0.15}s both`,
+                  }}
+                >
+                  <div className="mb-4 bg-gradient-to-br from-teal-100 to-amber-100 w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
+                    <IconComponent className="text-teal-700 group-hover:text-amber-600 transition-colors duration-300" size={28} />
+                  </div>
                 <h3 className="text-xl font-bold text-teal-700 mb-3 group-hover:text-amber-600 transition-colors duration-300">
                   {service.title}
                 </h3>
                 <p className="text-gray-600 leading-relaxed text-sm">{service.description}</p>
               </div>
-            ))}
+            )})}
           </div>
 
           <div className="text-center mt-12">
@@ -186,12 +193,19 @@ const HomePage = () => {
 
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto bg-gradient-to-br from-teal-700 via-teal-800 to-teal-900 rounded-3xl shadow-2xl overflow-hidden">
-            <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12 items-center">
-              <div className="text-white">
-                <h2 className="text-4xl font-bold mb-4">Meet {CLINIC_CONTENT.doctor.name}</h2>
-                <p className="text-gray-200 mb-4 leading-relaxed font-medium">{CLINIC_CONTENT.doctor.qualifications}</p>
-                <p className="text-gray-300 mb-6 leading-relaxed">{CLINIC_CONTENT.doctor.experience}</p>
+          <div className="max-w-6xl mx-auto bg-gradient-to-br from-teal-700 via-teal-800 to-teal-900 rounded-3xl shadow-2xl overflow-hidden">
+            <div className="grid md:grid-cols-5 gap-0 items-center">
+              {/* Text Content - Takes 3 columns */}
+              <div className="md:col-span-3 text-white p-8 md:p-12 lg:p-16">
+                <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+                  Meet Dr. Ashwin C. Somarajan
+                </h2>
+                <p className="text-amber-300 mb-2 leading-relaxed font-semibold text-base lg:text-lg">
+                  MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS - Cornea, Cataract & Retina Surgeon
+                </p>
+                <p className="text-gray-200 mb-6 leading-relaxed text-sm lg:text-base">
+                  8+ years of expertise in ophthalmology and retina care
+                </p>
                 <Link
                   to="/doctors"
                   className="inline-flex items-center bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-3 rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 font-semibold"
@@ -200,9 +214,17 @@ const HomePage = () => {
                   <ChevronRight className="ml-2" />
                 </Link>
               </div>
-              <div className="flex justify-center">
-                <div className="w-64 h-64 bg-gradient-to-br from-amber-400 to-amber-500 rounded-3xl flex items-center justify-center shadow-2xl group hover:scale-110 transition-transform duration-300">
-                  <Users className="text-white" size={120} />
+              
+              {/* Doctor Image - Takes 2 columns */}
+              <div className="md:col-span-2 h-full">
+                <div className="relative h-full min-h-[400px] md:min-h-[450px] group overflow-hidden">
+                  <img
+                    src="/images/DrAshwinCSomarajan.jpg"
+                    alt="Dr. Ashwin Cherusseril Somarajan - Consultant Vitreo-Retinal & Cataract Surgeon"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-l from-transparent to-teal-900/20"></div>
                 </div>
               </div>
             </div>
@@ -225,6 +247,8 @@ const HomePage = () => {
           </Link>
         </div>
       </section>
+
+      
 
       <style>{`
         @keyframes fadeInDown {

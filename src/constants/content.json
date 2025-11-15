@@ -1,32 +1,64 @@
 {
   "about": {
     "title": "Your Vision, Our Priority",
-    "description": "At Ananta Nethralaya, we bring together advanced technology, surgical precision, and compassionate care to deliver world-class eye treatment in a comforting environment.",
-    "shortDescription": "Led by Dr. Ashwin C. Somarajan, an experienced vitreoretinal and Cataract surgeon with over 8 years of expertise in ophthalmology, our mission is to make quality eye care accessible and trustworthy for every patient.",
+    "description": "At Ananta Nethralaya, we are dedicated to preserving and restoring vision with compassion, precision, and trust.",
+    "intro": "Founded by Dr. Ashwin C Somarajan (MBBS, DNB [Sankara Nethralaya], MNAMS, FVRS), the centre brings together advanced technology, ethical practice, and personalized care to deliver world-class ophthalmic services under one roof. We believe that every eye deserves focused attention — delivered with passion, compassion, and kindness.",
     "tagline": "From routine consultations to advanced cataract and retina surgeries, we are dedicated to preserving and restoring sight — because every vision deserves clarity."
   },
+  "visionMissionExcellence": [
+    {
+      "icon": "Eye",
+      "title": "Our Vision",
+      "description": "To be the most trusted name in eye care — delivering world-class treatment with compassion, innovation, and integrity, and making advanced ophthalmology accessible across Kerala and beyond."
+    },
+    {
+      "icon": "Target",
+      "title": "Our Mission",
+      "description": "To provide comprehensive and affordable eye care through cutting-edge technology, skilled professionals, and a patient-first approach — ensuring that every individual receives the best care their vision deserves."
+    },
+    {
+      "icon": "Award",
+      "title": "Our Excellence",
+      "description": "We are committed to excellence through continuous medical learning and innovation, the use of state-of-the-art diagnostic and surgical equipment, and an unwavering focus on patient comfort, safety, and satisfaction."
+    }
+  ],
   "whyChooseUs": [
     {
+      "icon": "Award",
       "title": "8+ Years of Experience",
       "description": "Backed by years of clinical and surgical expertise in ophthalmology and retina care."
     },
     {
+      "icon": "Shield",
       "title": "Trusted Eye Care Since 2025",
       "description": "A new beginning built on a foundation of experience, precision, and trust."
     },
     {
+      "icon": "Layers",
       "title": "Comprehensive Eye Solutions",
       "description": "Offering a full spectrum of services — Cataract, Retina, Glaucoma, Uvea, Neuro-Ophthalmology, trauma care & comprehensive Eye Care."
     },
     {
+      "icon": "Heart",
       "title": "Patient-Centered Care",
       "description": "Each patient is treated with empathy, transparency, and the highest ethical standards."
     },
     {
+      "icon": "Microscope",
       "title": "Cutting-Edge Technology",
       "description": "Equipped with modern diagnostics and surgical systems for precise and painless outcomes."
     }
   ],
+  "ourStory": {
+    "title": "Our Story",
+    "content": [
+      "MCS · Ananta Nethralaya is the first dedicated eye hospital in Muvattupuzha to offer comprehensive medical and surgical retina care, alongside complete ophthalmic services under one roof.",
+      "Founded by Dr. Ashwin C Somarajan (MBBS, DNB [Sankara Nethralaya], MNAMS, FVRS), and established in collaboration with MCS Hospital, Muvattupuzha, this centre marks the first unit of Ananta Nethralaya — a brand built on the values of passion, compassion, and kindness in eye care.",
+      "The hospital brings state-of-the-art retina diagnostics, advanced vitreoretinal surgery, and diabetic eye disease management to a region that previously lacked such specialized care. With the latest technology and a patient-centered approach, it bridges the gap between metro-level expertise and local accessibility.",
+      "Strategically located in Muvattupuzha, MCS · Ananta Nethralaya serves as a retina referral and treatment hub for nearby regions including Thodupuzha, Idukki, Kothamangalam, Perumbavoor, Piravom, Koothattukulam, Kaduthuruthy, and nearby areas of Ernakulam and Kottayam districts.",
+      "Here, patients receive world-class treatment — from routine eye check-ups to complex retinal surgeries to premium cataract surgeries — with the assurance of compassionate, ethical, and personalized care."
+    ]
+  },
   "doctor": {
     "name": "Dr. Ashwin C. Somarajan",
     "qualifications": "MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS - Cornea, Cataract & Retina Surgeon",
