@@ -10,7 +10,7 @@ import ServicesPage from './pages/ServicesPage';
 import DoctorsPage from './pages/DoctorsPage';
 import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/ContactPage';
-import WhatsAppButton from './components/WhatsAppButton';
+import WhatsAppButton from "./components/WhatsappButton"
 import PageTransition from './components/PageTransition';
 
 function App() {
