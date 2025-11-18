@@ -1,3 +1,4 @@
+// src/pages/AboutPage.jsx
 "use client"
 
 import { Eye, Shield, Layers, Heart, Microscope, Award, Target } from "lucide-react"

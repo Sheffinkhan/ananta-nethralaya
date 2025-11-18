@@ -1,3 +1,4 @@
+// src/pages/DoctorsPage.jsx
 import { Users, ChevronRight } from "lucide-react"
 import { Link } from "../utils/Router"
 import SEO from "../components/SEO"

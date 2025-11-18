@@ -7,20 +7,12 @@ import { Link } from "../utils/Router"
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [currentPath, setCurrentPath] = useState("")
+  const [currentPath, setCurrentPath] = useState(() => {
+    // Initialize with current hash path
+    return window.location.hash.slice(1) || '/'
+  })
 
-  const getCurrentPath = () => {
-    const hash = window.location.hash
-    if (hash) {
-      return hash.slice(1)
-    }
-    return window.location.pathname
-  }
-
-  useEffect(() => {
-    setCurrentPath(getCurrentPath())
-  }, [])
-
+  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
@@ -29,45 +21,18 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Handle route changes - SIMPLIFIED
   useEffect(() => {
     const handleHashChange = () => {
-      const newPath = getCurrentPath()
-      console.log("Hash changed to:", newPath)
-      setCurrentPath(newPath)
+      const hash = window.location.hash.slice(1) || '/'
+      setCurrentPath(hash)
     }
 
-    const handlePopState = () => {
-      const newPath = getCurrentPath()
-      console.log("PopState changed to:", newPath)
-      setCurrentPath(newPath)
-    }
-
-    const handleRouteChange = (e) => {
-      console.log("RouteChange event:", e.detail?.path)
-      if (e.detail?.path) {
-        setCurrentPath(e.detail.path)
-      }
-    }
-
+    // Listen for hash changes
     window.addEventListener("hashchange", handleHashChange)
-    window.addEventListener("popstate", handlePopState)
-    window.addEventListener("routechange", handleRouteChange)
-
-    const handleClick = () => {
-      setTimeout(() => {
-        const newPath = getCurrentPath()
-        console.log("Click detected, path:", newPath)
-        setCurrentPath(newPath)
-      }, 10)
-    }
-
-    document.addEventListener("click", handleClick)
-
+    
     return () => {
       window.removeEventListener("hashchange", handleHashChange)
-      window.removeEventListener("popstate", handlePopState)
-      window.removeEventListener("routechange", handleRouteChange)
-      document.removeEventListener("click", handleClick)
     }
   }, [])
 
@@ -80,13 +45,9 @@ const Navbar = () => {
     { name: "Contact", path: "/contact" },
   ]
 
+  // Simplified active check
   const isActive = (path) => {
-    console.log("Checking active - Link path:", path, "Current path:", currentPath)
-
-    if (path === "/" && currentPath === "/") return true
-    if (path !== "/" && currentPath === path) return true
-
-    return false
+    return currentPath === path
   }
 
   return (
@@ -98,13 +59,13 @@ const Navbar = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo Section with Brand Name */}
         <Link to="/" className="flex items-center gap-3 lg:gap-4 group">
-          {/* Main vertical logo with mix-blend-multiply to remove white background */}
-          <img
-            src="ANlogo-removebg-preview.png"
-            alt="Ananta Nethralaya Logo"
-            className="h-12 md:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
-            style={{ mixBlendMode: 'multiply' }}
-          />
+          <div className="relative w-12 h-12 md:w-14 md:h-14 bg-white rounded-full p-1 shadow-md">
+            <img
+              src="ANlogo-removebg-preview.png"
+              alt="Ananta Nethralaya Logo"
+              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+            />
+          </div>
 
           {/* Brand Name - Visible on all screens */}
           <div className="flex flex-col">
@@ -125,9 +86,6 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.path}
-                onClick={() => {
-                  setTimeout(() => setCurrentPath(link.path), 10)
-                }}
                 className={`font-medium px-4 py-2 rounded-lg transition-all duration-300 relative group ${
                   active ? "text-teal-700 bg-teal-50 font-bold" : "text-gray-700 hover:text-teal-700"
                 }`}
@@ -159,7 +117,7 @@ const Navbar = () => {
           aria-label="Toggle menu"
         >
           {isMobileMenuOpen ? (
-            <X className="text-teal-700 animate-spin" size={24} />
+            <X className="text-teal-700" size={24} />
           ) : (
             <Menu className="text-teal-700" size={24} />
           )}
@@ -181,10 +139,7 @@ const Navbar = () => {
                       ? "text-teal-700 bg-teal-50 font-bold border-l-4 border-teal-600"
                       : "text-gray-700 hover:text-teal-700 hover:bg-teal-50"
                   }`}
-                  onClick={() => {
-                    setIsMobileMenuOpen(false)
-                    setTimeout(() => setCurrentPath(link.path), 10)
-                  }}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   style={{
                     animation: `slideInLeft 0.3s ease-out ${idx * 0.05}s both`,
                   }}

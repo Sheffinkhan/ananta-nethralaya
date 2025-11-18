@@ -1,3 +1,4 @@
+// src/pages/ContactPage.jsx
 "use client"
 
 import { useState } from "react"
@@ -108,7 +109,7 @@ Please confirm this appointment.`
                         MCS - Ananta Nethralaya, <br />
                         MCS Hospital, <br />
                         Muvattupuzha, <br />
-                        Ernakulam, Kerala - 686673
+                        Ernakulam, Kerala - 686661
                       </p>
                     </div>
                   </div>

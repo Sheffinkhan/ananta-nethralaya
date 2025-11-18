@@ -1,50 +1,70 @@
-"use client"
+// src/pages/HomePage.jsx
+"use client";
 
-import { useEffect, useState } from "react"
-import SEO from "../components/SEO"
-import { ChevronRight, ChevronDown, Users, Award, Heart, Eye, Microscope, Activity, Flame } from "lucide-react"
-import { Link } from "../utils/Router"
-import  CLINIC_CONTENT  from "../constants/content"
-import Navbar from "../components/Navbar"
+import { useEffect, useState } from "react";
+import SEO from "../components/SEO";
 
+import {
+  ChevronRight,
+  ChevronDown,
+  Award,
+  Heart,
+  Eye,
+  Flame,
+} from "lucide-react";
+
+import { Link } from "../utils/Router";
+
+// Import your premium medical icons
+import { RetinaIcon, GlaucomaIcon, RefractiveIcon } from "../constants/icons";
+
+// Bring clinic content
+import CLINIC_CONTENT from "../constants/content";
 
 const HomePage = () => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true)
-  }, [])
+    setIsVisible(true);
+  }, []);
 
   const handleScrollDown = () => {
-    const statsSection = document.querySelector(".stats-section")
+    const statsSection = document.querySelector(".stats-section");
     if (statsSection) {
-      statsSection.scrollIntoView({ behavior: "smooth" })
+      statsSection.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
+  // Stats Cards
   const stats = [
-    { icon: Users, value: "5000+", label: "Happy Patients" },
     { icon: Award, value: "8+", label: "Years Experience" },
     { icon: Heart, value: "99%", label: "Success Rate" },
-    { icon: Eye, value: "6+", label: "Specialized Services" },
-  ]
+    { icon: Eye, value: "8+", label: "Specialized Services" },
+  ];
 
-  const serviceIcons = [Eye, Microscope, Activity, Flame];
+  // HomePage FEATURES section — now with new premium icons
+  const serviceIcons = [
+    Eye, // Cataract
+    RetinaIcon, // Retina  (Option 3)
+    GlaucomaIcon, // Glaucoma
+    RefractiveIcon, // Refractive (LASIK)
+  ];
+
   const services = CLINIC_CONTENT.services.slice(0, 4).map((service, idx) => ({
     ...service,
-    iconComponent: serviceIcons[idx]
+    iconComponent: serviceIcons[idx],
   }));
 
   return (
     <>
       <SEO
         title="Ananta Nethralaya - Premium Eye Care Center | Muvattupuzha, Kerala"
-        description="Expert eye care services in Muvattupuzha, Kerala. Specializing in premium cataract surgery, retina surgery, diabetic retinopathy care, and comprehensive eye treatments. Book your appointment today with Dr. Ashwin C Somarajan."
-        keywords="eye care Kerala, cataract surgery Muvattupuzha, retina surgery Kerala, eye hospital Ernakulam, diabetic retinopathy treatment, ophthalmology Kerala, eye specialist Muvattupuzha, premium IOL surgery, vitrectomy Kerala, eye doctor near me"
-        ogImage="/logo.png"
+        description="Expert eye care services in Muvattupuzha, Kerala. Specializing in premium cataract surgery, retina surgery, diabetic retinopathy care, and comprehensive eye treatments."
+        keywords="eye care Kerala, cataract surgery Muvattupuzha, retina surgery Kerala, ophthalmology Kerala"
+        ogImage="ANlogo.jpg"
         canonical="https://www.anantanethralaya.org/"
       />
-      <Navbar />
+      {/* ============================ HERO ============================ */}
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-teal-900 to-slate-900 overflow-hidden pt-20">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-72 h-72 bg-teal-500 rounded-full blur-3xl animate-pulse"></div>
@@ -61,17 +81,13 @@ const HomePage = () => {
         <div className="container mx-auto px-4 z-10">
           <div className="max-w-3xl mx-auto text-center">
             <div
-              className="mb-8 animate-fade-in"
-              style={{
-                animation: `fadeInDown 0.8s ease-out`,
-              }}
+              className="mb-8"
+              style={{ animation: `fadeInDown 0.8s ease-out` }}
             ></div>
 
             <h1
               className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
-              style={{
-                animation: `fadeInUp 1s ease-out 0.2s both`,
-              }}
+              style={{ animation: `fadeInUp 1s ease-out 0.2s both` }}
             >
               {CLINIC_CONTENT.about.title.split(",")[0]},
               <br />
@@ -82,18 +98,14 @@ const HomePage = () => {
 
             <p
               className="text-xl text-gray-200 mb-8 leading-relaxed"
-              style={{
-                animation: `fadeInUp 1s ease-out 0.4s both`,
-              }}
+              style={{ animation: `fadeInUp 1s ease-out 0.4s both` }}
             >
               {CLINIC_CONTENT.about.description}
             </p>
 
             <div
               className="flex flex-col sm:flex-row gap-4 justify-center"
-              style={{
-                animation: `fadeInUp 1s ease-out 0.6s both`,
-              }}
+              style={{ animation: `fadeInUp 1s ease-out 0.6s both` }}
             >
               <Link
                 to="/contact"
@@ -102,6 +114,7 @@ const HomePage = () => {
                 Book Appointment
                 <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
+
               <Link
                 to="/services"
                 className="bg-white text-teal-700 px-8 py-4 rounded-full hover:bg-gray-100 hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg font-semibold text-lg"
@@ -112,6 +125,7 @@ const HomePage = () => {
           </div>
         </div>
 
+        {/* Scroll down indicator */}
         <div
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer hover:scale-110 transition-transform"
           onClick={handleScrollDown}
@@ -119,12 +133,12 @@ const HomePage = () => {
           <ChevronDown className="text-white" size={32} />
         </div>
       </section>
-
+      {/* ============================ STATS ============================ */}
       <section className="stats-section py-20 bg-gradient-to-r from-teal-700 to-teal-800">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {stats.map((stat, idx) => {
-              const IconComponent = stat.icon
+              const IconComponent = stat.icon;
               return (
                 <div
                   key={idx}
@@ -134,17 +148,22 @@ const HomePage = () => {
                   }}
                 >
                   <div className="mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <IconComponent className="text-amber-400 mx-auto" size={40} />
+                    <IconComponent
+                      className="text-amber-400 mx-auto"
+                      size={40}
+                    />
                   </div>
-                  <h3 className="text-4xl font-bold text-white mb-2">{stat.value}</h3>
+                  <h3 className="text-4xl font-bold text-white mb-2">
+                    {stat.value}
+                  </h3>
                   <p className="text-gray-100 font-medium">{stat.label}</p>
                 </div>
-              )
+              );
             })}
           </div>
         </div>
       </section>
-
+      {/* ============================ SERVICES ============================ */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -168,14 +187,22 @@ const HomePage = () => {
                   }}
                 >
                   <div className="mb-4 bg-gradient-to-br from-teal-100 to-amber-100 w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
-                    <IconComponent className="text-teal-700 group-hover:text-amber-600 transition-colors duration-300" size={28} />
+                    <IconComponent
+                      className="text-teal-700 group-hover:text-amber-600 transition-colors duration-300"
+                      size={28}
+                    />
                   </div>
-                <h3 className="text-xl font-bold text-teal-700 mb-3 group-hover:text-amber-600 transition-colors duration-300">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed text-sm">{service.description}</p>
-              </div>
-            )})}
+
+                  <h3 className="text-xl font-bold text-teal-700 mb-3 group-hover:text-amber-600 transition-colors duration-300">
+                    {service.title}
+                  </h3>
+
+                  <p className="text-gray-600 leading-relaxed text-sm">
+                    {service.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
 
           <div className="text-center mt-12">
@@ -189,100 +216,90 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
+      {/* ============================ DOCTOR SECTION / CTA ============================ */}
+      {/* (same as your file — unchanged, keeping animations & layout) */}
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+        {" "}
         <div className="container mx-auto px-4">
+          {" "}
           <div className="max-w-6xl mx-auto bg-gradient-to-br from-teal-700 via-teal-800 to-teal-900 rounded-3xl shadow-2xl overflow-hidden">
+            {" "}
             <div className="grid md:grid-cols-5 gap-0 items-center">
-              {/* Text Content - Takes 3 columns */}
+              {" "}
+              {/* Text Content - Takes 3 columns */}{" "}
               <div className="md:col-span-3 text-white p-8 md:p-12 lg:p-16">
+                {" "}
                 <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                  Meet Dr. Ashwin C. Somarajan
-                </h2>
+                  {" "}
+                  Meet Dr. Ashwin C. Somarajan{" "}
+                </h2>{" "}
                 <p className="text-amber-300 mb-2 leading-relaxed font-semibold text-base lg:text-lg">
-                  MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS - Cornea, Cataract & Retina Surgeon
-                </p>
+                  {" "}
+                  MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS -
+                  Cornea, Cataract & Retina Surgeon{" "}
+                </p>{" "}
                 <p className="text-gray-200 mb-6 leading-relaxed text-sm lg:text-base">
-                  8+ years of expertise in ophthalmology and retina care
-                </p>
+                  {" "}
+                  8+ years of expertise in ophthalmology and retina care{" "}
+                </p>{" "}
                 <Link
                   to="/doctors"
                   className="inline-flex items-center bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-3 rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 font-semibold"
                 >
-                  Learn More
-                  <ChevronRight className="ml-2" />
-                </Link>
-              </div>
-              
-              {/* Doctor Image - Takes 2 columns */}
+                  {" "}
+                  Learn More <ChevronRight className="ml-2" />{" "}
+                </Link>{" "}
+              </div>{" "}
+              {/* Doctor Image - Takes 2 columns */}{" "}
               <div className="md:col-span-2 h-full">
+                {" "}
                 <div className="relative h-full min-h-[400px] md:min-h-[450px] group overflow-hidden">
+                  {" "}
                   <img
                     src="/images/DrAshwinCSomarajan.jpg"
                     alt="Dr. Ashwin Cherusseril Somarajan - Consultant Vitreo-Retinal & Cataract Surgeon"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-l from-transparent to-teal-900/20"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+                  />{" "}
+                  <div className="absolute inset-0 bg-gradient-to-l from-transparent to-teal-900/20"></div>{" "}
+                </div>{" "}
+              </div>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </section>{" "}
       <section className="py-20 bg-gradient-to-r from-teal-700 via-teal-800 to-teal-900">
+        {" "}
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Ready to See Clearly?</h2>
+          {" "}
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Ready to See Clearly?
+          </h2>{" "}
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-            Schedule your appointment today and experience world-class eye care
-          </p>
+            {" "}
+            Schedule your appointment today and experience world-class eye care{" "}
+          </p>{" "}
           <Link
             to="/contact"
             className="inline-flex items-center bg-gradient-to-r from-amber-500 to-amber-600 text-white px-10 py-5 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl font-semibold text-lg"
           >
-            Book Your Appointment
-            <ChevronRight className="ml-2" />
-          </Link>
-        </div>
+            {" "}
+            Book Your Appointment <ChevronRight className="ml-2" />{" "}
+          </Link>{" "}
+        </div>{" "}
       </section>
-
-      
-
       <style>{`
         @keyframes fadeInDown {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes fadeInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
