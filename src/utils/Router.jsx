@@ -1,12 +1,15 @@
-//src/utils/Router.jsx
+// src/utils/Router.jsx
 import React, { useState, useEffect } from 'react';
 
 export const Router = ({ children }) => {
-  const [currentPath, setCurrentPath] = useState(window.location.hash.slice(1) || '/');
+  const [currentPath, setCurrentPath] = useState(() => {
+    return window.location.hash.slice(1) || '/';
+  });
   
   useEffect(() => {
     const handleHashChange = () => {
-      setCurrentPath(window.location.hash.slice(1) || '/');
+      const hash = window.location.hash.slice(1) || '/';
+      setCurrentPath(hash);
       window.scrollTo(0, 0);
     };
     
@@ -14,22 +17,29 @@ export const Router = ({ children }) => {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
   
-  return React.Children.map(children, child => {
-    if (child.props.path === currentPath) {
-      return child;
-    }
-    return null;
-  });
+  const matchedRoute = React.Children.toArray(children).find(
+    child => child.props.path === currentPath
+  );
+  
+  return matchedRoute || null;
 };
 
 export const Route = ({ children }) => children;
 
-export const Link = ({ to, children, className, onClick }) => (
-  <a 
-    href={`#${to}`} 
-    className={className}
-    onClick={onClick}
-  >
-    {children}
-  </a>
-);
+export const Link = ({ to, children, className, onClick }) => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    window.location.hash = to;
+    if (onClick) onClick(e);
+  };
+
+  return (
+    <a 
+      href={`#${to}`} 
+      className={className}
+      onClick={handleClick}
+    >
+      {children}
+    </a>
+  );
+};
