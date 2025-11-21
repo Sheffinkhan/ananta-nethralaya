@@ -17,11 +17,108 @@ const ContactPage = () => {
     message: "",
   })
 
+  const [errors, setErrors] = useState({})
+
+  // Validation Functions
+  const validatePhone = (phone) => {
+    const phoneRegex = /^[6-9]\d{9}$/
+    return phoneRegex.test(phone)
+  }
+
+  const validateEmail = (email) => {
+    if (!email) return true // Email is optional
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
+  const validateAge = (age) => {
+    if (!age) return true // Age is optional
+    const ageNum = parseInt(age)
+    return ageNum >= 1 && ageNum <= 120
+  }
+
+  const validateDate = (date) => {
+    if (!date) return true // Date is optional
+    const selectedDate = new Date(date)
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    
+    // Check if date is in the past
+    if (selectedDate < today) return false
+    
+    // Check if selected date is Sunday (0 = Sunday)
+    if (selectedDate.getDay() === 0) return false
+    
+    return true
+  }
+
+  const formatDateToDDMMYYYY = (dateString) => {
+    if (!dateString) return "Flexible"
+    const date = new Date(dateString)
+    const day = String(date.getDate()).padStart(2, '0')
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const year = date.getFullYear()
+    return `${day}-${month}-${year}`
+  }
+
+  const validateForm = () => {
+    const newErrors = {}
+
+    // Full Name validation
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = "Full name is required"
+    } else if (formData.fullName.trim().length < 2) {
+      newErrors.fullName = "Name must be at least 2 characters"
+    }
+
+    // Phone validation
+    if (!formData.phone) {
+      newErrors.phone = "Phone number is required"
+    } else if (!validatePhone(formData.phone)) {
+      newErrors.phone = "Enter a valid 10-digit Indian mobile number"
+    }
+
+    // Email validation (optional but must be valid if provided)
+    if (formData.email && !validateEmail(formData.email)) {
+      newErrors.email = "Enter a valid email address"
+    }
+
+    // Age validation (optional but must be valid if provided)
+    if (formData.age && !validateAge(formData.age)) {
+      newErrors.age = "Age must be between 1 and 120"
+    }
+
+    // Service validation
+    if (!formData.service) {
+      newErrors.service = "Please select a service"
+    }
+
+    // Date validation (optional but must be future date if provided)
+    if (formData.date && !validateDate(formData.date)) {
+      const selectedDate = new Date(formData.date)
+      if (selectedDate.getDay() === 0) {
+        newErrors.date = "We are closed on Sundays. Please select Monday to Saturday"
+      } else {
+        newErrors.date = "Please select a current or future date"
+      }
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (!formData.fullName || !formData.phone || !formData.service) {
-      alert("Please fill in all required fields (Full Name, Phone Number, and Service)")
+    // Validate form
+    if (!validateForm()) {
+      // Scroll to first error
+      const firstErrorField = Object.keys(errors)[0]
+      const errorElement = document.getElementsByName(firstErrorField)[0]
+      if (errorElement) {
+        errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        errorElement.focus()
+      }
       return
     }
 
@@ -36,7 +133,7 @@ Age: ${formData.age || "Not provided"}
 
 *Appointment Details:*
 Service: ${formData.service}
-Preferred Date: ${formData.date || "Flexible"}
+Preferred Date: ${formatDateToDDMMYYYY(formData.date)}
 Message: ${formData.message || "No additional message"}
 
 Please confirm this appointment.`
@@ -50,6 +147,38 @@ Please confirm this appointment.`
 
   const handleChange = (event) => {
     const { name, value } = event.target
+    
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
+
+    // Special handling for phone - only allow numbers
+    if (name === 'phone') {
+      const numericValue = value.replace(/\D/g, '').slice(0, 10)
+      setFormData({
+        ...formData,
+        [name]: numericValue,
+      })
+      return
+    }
+
+    // Special handling for age - only allow numbers
+    if (name === 'age') {
+      const numericValue = value.replace(/\D/g, '')
+      if (numericValue === '' || (parseInt(numericValue) >= 1 && parseInt(numericValue) <= 120)) {
+        setFormData({
+          ...formData,
+          [name]: numericValue,
+        })
+      }
+      return
+    }
+
     setFormData({
       ...formData,
       [name]: value,
@@ -187,7 +316,7 @@ Please confirm this appointment.`
                 style={{ animationDelay: "0.2s" }}
               >
                 <h3 className="text-3xl font-bold text-teal-700 mb-8">Book Appointment</h3>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                   {/* Full Name */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -199,9 +328,13 @@ Please confirm this appointment.`
                       value={formData.fullName}
                       onChange={handleChange}
                       placeholder="Enter your full name"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 focus:scale-105"
-                      required
+                      className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 ${
+                        errors.fullName ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     />
+                    {errors.fullName && (
+                      <p className="mt-1 text-sm text-red-500">{errors.fullName}</p>
+                    )}
                   </div>
 
                   {/* Phone Number */}
@@ -215,10 +348,14 @@ Please confirm this appointment.`
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="Enter 10-digit mobile number"
-                      pattern="[0-9]{10}"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 focus:scale-105"
-                      required
+                      maxLength="10"
+                      className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 ${
+                        errors.phone ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     />
+                    {errors.phone && (
+                      <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
+                    )}
                   </div>
 
                   {/* Email */}
@@ -230,8 +367,13 @@ Please confirm this appointment.`
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="your.email@example.com"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 focus:scale-105"
+                      className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 ${
+                        errors.email ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     />
+                    {errors.email && (
+                      <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                    )}
                   </div>
 
                   {/* Gender & Age */}
@@ -242,27 +384,32 @@ Please confirm this appointment.`
                         name="gender"
                         value={formData.gender}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 focus:scale-105 text-black bg-white"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 text-gray-700 bg-white"
                       >
-                        <option value="" hidden>Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
 
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">Age</label>
                       <input
-                        type="number"
+                        type="text"
+                        inputMode="numeric"
                         name="age"
                         value={formData.age}
                         onChange={handleChange}
                         placeholder="Age"
-                        min="1"
-                        max="120"
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 focus:scale-105"
+                        maxLength="3"
+                        className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 ${
+                          errors.age ? 'border-red-500' : 'border-gray-300'
+                        }`}
                       />
+                      {errors.age && (
+                        <p className="mt-1 text-xs text-red-500">{errors.age}</p>
+                      )}
                     </div>
                   </div>
 
@@ -275,10 +422,11 @@ Please confirm this appointment.`
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 focus:scale-105 text-black bg-white"
-                      required
+                      className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 text-gray-700 bg-white ${
+                        errors.service ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     >
-                      <option value="" hidden>Choose a Service</option>
+                      <option value="">Choose a Service</option>
                       <option value="Premium Cataract Surgery">Premium Cataract Surgery</option>
                       <option value="Retina & Vitreous Services">Retina & Vitreous Services</option>
                       <option value="Glaucoma Management">Glaucoma Management</option>
@@ -290,6 +438,9 @@ Please confirm this appointment.`
                       <option value="Refractive Services (LASIK & Beyond)">Refractive Services (LASIK & Beyond)</option>
                       <option value="Comprehensive Eye Care for All Ages">Comprehensive Eye Care for All Ages</option>
                     </select>
+                    {errors.service && (
+                      <p className="mt-1 text-sm text-red-500">{errors.service}</p>
+                    )}
                   </div>
 
                   {/* Date */}
@@ -301,8 +452,14 @@ Please confirm this appointment.`
                       value={formData.date}
                       onChange={handleChange}
                       min={new Date().toISOString().split("T")[0]}
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 focus:scale-105"
+                      className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 ${
+                        errors.date ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     />
+                    {errors.date && (
+                      <p className="mt-1 text-sm text-red-500">{errors.date}</p>
+                    )}
+                    <p className="mt-1 text-xs text-teal-600 font-medium">Consultation Hours: Monday - Saturday, 9:00 AM - 5:00 PM</p>
                   </div>
 
                   {/* Message */}
@@ -314,8 +471,12 @@ Please confirm this appointment.`
                       onChange={handleChange}
                       placeholder="Any specific concerns or questions?"
                       rows="3"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all resize-none hover:border-teal-400 focus:scale-105"
+                      maxLength="500"
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all resize-none hover:border-teal-400"
                     ></textarea>
+                    <p className="mt-1 text-xs text-gray-500 text-right">
+                      {formData.message.length}/500 characters
+                    </p>
                   </div>
 
                   {/* Submit Button */}
@@ -334,20 +495,17 @@ Please confirm this appointment.`
               </div>
             </div>
 
-            {/* ENHANCED GOOGLE MAP SECTION - REPLACE YOUR OLD MAP WITH THIS */}
+            {/* Map Section */}
             <div className="max-w-6xl mx-auto mt-16 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
               <div className="text-center mb-8">
                 <h3 className="text-3xl md:text-4xl font-bold text-teal-700 mb-3">Find Us</h3>
                 <p className="text-gray-600">MCS Hospital, Muvattupuzha, Kerala</p>
               </div>
 
-              {/* Map Container with Enhanced Border */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-teal-100 hover:border-teal-300 transition-all duration-300 group">
-                {/* Decorative Corner Accents */}
                 <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-teal-500/20 to-transparent z-10 pointer-events-none"></div>
                 <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-amber-500/20 to-transparent z-10 pointer-events-none"></div>
 
-                {/* Google Maps Iframe */}
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d694.6087231162195!2d76.58789641593297!3d9.992033615752066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b07e77bf1f9fd5f%3A0xfb6ce3bdd67fad42!2sMCS%20Hospital%2C%20Muvattupuzha!5e0!3m2!1sen!2sin!4v1762707443342!5m2!1sen!2sin"
                   width="100%"
@@ -360,7 +518,6 @@ Please confirm this appointment.`
                   className="grayscale-[0.2] hover:grayscale-0 transition-all duration-500"
                 ></iframe>
 
-                {/* Floating Action Buttons */}
                 <div className="absolute top-4 right-4 flex flex-col gap-2 z-20">
                   <button
                     onClick={openInGoogleMaps}
@@ -381,7 +538,6 @@ Please confirm this appointment.`
                   </button>
                 </div>
 
-                {/* Location Badge at Bottom */}
                 <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg z-20 border border-teal-200">
                   <div className="flex items-center gap-2">
                     <MapPin className="text-teal-600" size={20} />
@@ -393,9 +549,7 @@ Please confirm this appointment.`
                 </div>
               </div>
 
-              {/* Info Cards Grid Below Map */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                {/* Address Card */}
                 <div className="bg-gradient-to-br from-teal-50 via-teal-100 to-cyan-100 p-6 rounded-xl hover:scale-105 transition-all duration-300 shadow-md hover:shadow-xl border-2 border-teal-200">
                   <div className="flex items-start gap-3">
                     <div className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center flex-shrink-0">
@@ -411,7 +565,6 @@ Please confirm this appointment.`
                   </div>
                 </div>
 
-                {/* Navigation Card */}
                 <div className="bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-100 p-6 rounded-xl hover:scale-105 transition-all duration-300 shadow-md hover:shadow-xl border-2 border-blue-200 cursor-pointer" onClick={getDirections}>
                   <div className="flex items-start gap-3">
                     <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
@@ -427,7 +580,6 @@ Please confirm this appointment.`
                   </div>
                 </div>
 
-                {/* Contact Card */}
                 <div className="bg-gradient-to-br from-amber-50 via-amber-100 to-orange-100 p-6 rounded-xl hover:scale-105 transition-all duration-300 shadow-md hover:shadow-xl border-2 border-amber-200">
                   <div className="flex items-start gap-3">
                     <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center flex-shrink-0">
@@ -446,7 +598,6 @@ Please confirm this appointment.`
                 </div>
               </div>
 
-              {/* Landmark Information */}
               <div className="mt-6 bg-gradient-to-r from-teal-600 to-teal-800 text-white p-6 rounded-xl shadow-lg">
                 <h4 className="font-bold text-lg mb-3 flex items-center gap-2">
                   <MapPin size={20} />
