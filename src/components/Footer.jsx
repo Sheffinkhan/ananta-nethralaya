@@ -1,11 +1,4 @@
-import {
-  Phone,
-  Mail,
-  MapPin,
-  Facebook,
-  Instagram,
-  Clock,
-} from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Instagram, Clock } from "lucide-react";
 import { Link } from "../utils/Router";
 
 const Footer = () => {
@@ -126,12 +119,9 @@ const Footer = () => {
                 />
                 <div className="text-gray-300">
                   <div>Mon - Sat: 9:00 AM - 5:00 PM</div>
-                  <div>Sunday: By Appointment</div>
-                  <div className="text-amber-400 font-semibold">
-                    Emergency: 24/7
-                  </div>
                 </div>
               </li>
+
               <li className="flex items-start space-x-3 group">
                 <Mail
                   className="text-amber-400 flex-shrink-0 mt-1 group-hover:scale-110 transition-transform"
@@ -149,16 +139,16 @@ const Footer = () => {
             {/* Social Media */}
             <div className="mt-6">
               <h5 className="text-sm font-semibold mb-3 text-amber-400">
-                Follow Us
+                Connect With Us
               </h5>
               <div className="flex space-x-3">
-                <a
+                {/* <a
                   href="#"
                   className="w-10 h-10 bg-teal-700 rounded-full flex items-center justify-center hover:bg-amber-500 transition-all duration-300 hover:scale-110"
                   aria-label="Facebook"
                 >
                   <Facebook size={18} />
-                </a>
+                </a> */}
                 <a
                   href="https://www.instagram.com/ananta_nethralaya?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                   target="_blank"

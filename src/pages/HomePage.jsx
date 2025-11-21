@@ -235,8 +235,7 @@ const HomePage = () => {
                 </h2>{" "}
                 <p className="text-amber-300 mb-2 leading-relaxed font-semibold text-base lg:text-lg">
                   {" "}
-                  MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS -
-                  Cornea, Cataract & Retina Surgeon{" "}
+                  MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS, Cataract & Retina Surgeon{" "}
                 </p>{" "}
                 <p className="text-gray-200 mb-6 leading-relaxed text-sm lg:text-base">
                   {" "}
