@@ -2,6 +2,7 @@
 import { Users, ChevronRight } from "lucide-react"
 import { Link } from "../utils/Router"
 import SEO from "../components/SEO"
+import DrAshwinPhoto from "../assets/images/DrAshwinCSomarajan.jpg"
 
 const DoctorsPage = () => {
   return (
@@ -31,7 +32,7 @@ const DoctorsPage = () => {
                   <div className="flex-shrink-0 mx-auto lg:mx-0">
                     <div className="w-72 h-96 lg:w-80 lg:h-[420px] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 group">
                       <img
-                        src="/images/DrAshwinCSomarajan.jpg"
+                        src={DrAshwinPhoto}
                         alt="Dr. Ashwin Cherusseril Somarajan - Consultant Vitreo-Retinal & Cataract Surgeon"
                         className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                         loading="lazy"

@@ -1,16 +1,22 @@
 // src/pages/HomePage.jsx
-"use client";
-
 import { useEffect, useState } from "react";
 import SEO from "../components/SEO";
+import DrAshwinPhoto from "../assets/images/DrAshwinCSomarajan.jpg";
+import logo from "../assets/images/ANlogo-removebg-preview.png";
+import  { CataractIcon } from "../constants/icons";
+import { DiabeticRetinaIcon } from "../constants/icons";
+
+
+
 
 import {
   ChevronRight,
   ChevronDown,
   Award,
-  Heart,
   Eye,
-  Flame,
+  Cpu,
+  Smile,
+  Users
 } from "lucide-react";
 
 import { Link } from "../utils/Router";
@@ -38,16 +44,17 @@ const HomePage = () => {
   // Stats Cards
   const stats = [
     { icon: Award, value: "8+", label: "Years Experience" },
-    { icon: Heart, value: "99%", label: "Success Rate" },
-    { icon: Eye, value: "8+", label: "Specialized Services" },
+    { icon: Eye, value: "10+", label: "Specialized Services" },
+    { icon: Cpu, value: "Cutting-Edge", label: "Technology" },
+    { icon: Smile, value: "High", label: "Patient Satisfaction" },
   ];
 
   // HomePage FEATURES section — now with new premium icons
   const serviceIcons = [
-    Eye, // Cataract
-    RetinaIcon, // Retina  (Option 3)
-    GlaucomaIcon, // Glaucoma
-    RefractiveIcon, // Refractive (LASIK)
+    CataractIcon, // Cataract
+    RetinaIcon, // Retina
+    Users, 
+    DiabeticRetinaIcon, // Diabetic Retina
   ];
 
   const services = CLINIC_CONTENT.services.slice(0, 4).map((service, idx) => ({
@@ -64,6 +71,7 @@ const HomePage = () => {
         ogImage="ANlogo.jpg"
         canonical="https://www.anantanethralaya.org/"
       />
+      
       {/* ============================ HERO ============================ */}
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-teal-900 to-slate-900 overflow-hidden pt-20">
         <div className="absolute inset-0 opacity-20">
@@ -80,10 +88,22 @@ const HomePage = () => {
 
         <div className="container mx-auto px-4 z-10">
           <div className="max-w-3xl mx-auto text-center">
+            {/* Logo with Professional Animations */}
             <div
-              className="mb-8"
-              style={{ animation: `fadeInDown 0.8s ease-out` }}
-            ></div>
+              className="mb-8 flex justify-center"
+              style={{ animation: `logoFloat 3s ease-in-out infinite, fadeInDown 0.8s ease-out` }}
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-teal-400 rounded-full blur-2xl opacity-50 animate-pulse"></div>
+                <div className="relative bg-white rounded-full p-2 shadow-2xl hover:shadow-amber-400/50 transition-all duration-500 hover:scale-110 group">
+                  <img
+                    src={logo}
+                    alt="Ananta Nethralaya Logo"
+                    className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 object-contain"
+                  />
+                </div>
+              </div>
+            </div>
 
             <h1
               className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
@@ -133,10 +153,11 @@ const HomePage = () => {
           <ChevronDown className="text-white" size={32} />
         </div>
       </section>
+
       {/* ============================ STATS ============================ */}
       <section className="stats-section py-20 bg-gradient-to-r from-teal-700 to-teal-800">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {stats.map((stat, idx) => {
               const IconComponent = stat.icon;
               return (
@@ -163,6 +184,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
       {/* ============================ SERVICES ============================ */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -216,77 +238,66 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      {/* ============================ DOCTOR SECTION / CTA ============================ */}
-      {/* (same as your file — unchanged, keeping animations & layout) */}
+
+      {/* ============================ DOCTOR SECTION ============================ */}
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-        {" "}
         <div className="container mx-auto px-4">
-          {" "}
           <div className="max-w-6xl mx-auto bg-gradient-to-br from-teal-700 via-teal-800 to-teal-900 rounded-3xl shadow-2xl overflow-hidden">
-            {" "}
             <div className="grid md:grid-cols-5 gap-0 items-center">
-              {" "}
-              {/* Text Content - Takes 3 columns */}{" "}
+              {/* Text Content - Takes 3 columns */}
               <div className="md:col-span-3 text-white p-8 md:p-12 lg:p-16">
-                {" "}
                 <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                  {" "}
-                  Meet Dr. Ashwin C. Somarajan{" "}
-                </h2>{" "}
+                  Meet Dr. Ashwin C. Somarajan
+                </h2>
                 <p className="text-amber-300 mb-2 leading-relaxed font-semibold text-base lg:text-lg">
-                  {" "}
-                  MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS, Cataract & Retina Surgeon{" "}
-                </p>{" "}
+                  MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS, Cataract & Retina Surgeon
+                </p>
                 <p className="text-gray-200 mb-6 leading-relaxed text-sm lg:text-base">
-                  {" "}
-                  8+ years of expertise in ophthalmology and retina care{" "}
-                </p>{" "}
+                  8+ years of expertise in ophthalmology and retina care
+                </p>
                 <Link
                   to="/doctors"
                   className="inline-flex items-center bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-3 rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 font-semibold"
                 >
-                  {" "}
-                  Learn More <ChevronRight className="ml-2" />{" "}
-                </Link>{" "}
-              </div>{" "}
-              {/* Doctor Image - Takes 2 columns */}{" "}
+                  Learn More <ChevronRight className="ml-2" />
+                </Link>
+              </div>
+
+              {/* Doctor Image - Takes 2 columns */}
               <div className="md:col-span-2 h-full">
-                {" "}
                 <div className="relative h-full min-h-[400px] md:min-h-[450px] group overflow-hidden">
-                  {" "}
                   <img
-                    src="/images/DrAshwinCSomarajan.jpg"
+                    src={DrAshwinPhoto}
                     alt="Dr. Ashwin Cherusseril Somarajan - Consultant Vitreo-Retinal & Cataract Surgeon"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
-                  />{" "}
-                  <div className="absolute inset-0 bg-gradient-to-l from-transparent to-teal-900/20"></div>{" "}
-                </div>{" "}
-              </div>{" "}
-            </div>{" "}
-          </div>{" "}
-        </div>{" "}
-      </section>{" "}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-l from-transparent to-teal-900/20"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================ CTA SECTION ============================ */}
       <section className="py-20 bg-gradient-to-r from-teal-700 via-teal-800 to-teal-900">
-        {" "}
         <div className="container mx-auto px-4 text-center">
-          {" "}
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Ready to See Clearly?
-          </h2>{" "}
+          </h2>
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-            {" "}
-            Schedule your appointment today and experience world-class eye care{" "}
-          </p>{" "}
+            Schedule your appointment today and experience world-class eye care
+          </p>
           <Link
             to="/contact"
             className="inline-flex items-center bg-gradient-to-r from-amber-500 to-amber-600 text-white px-10 py-5 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl font-semibold text-lg"
           >
-            {" "}
-            Book Your Appointment <ChevronRight className="ml-2" />{" "}
-          </Link>{" "}
-        </div>{" "}
+            Book Your Appointment <ChevronRight className="ml-2" />
+          </Link>
+        </div>
       </section>
+
       <style>{`
         @keyframes fadeInDown {
           from { opacity: 0; transform: translateY(-20px); }
@@ -295,6 +306,10 @@ const HomePage = () => {
         @keyframes fadeInUp {
           from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes logoFloat {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
         }
       `}</style>
     </>

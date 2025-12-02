@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import { Link } from "../utils/Router"
+import Logo from "../assets/images/ANlogo-removebg-preview.png"
+
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -61,7 +63,7 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-3 lg:gap-4 group">
           <div className="relative w-12 h-12 md:w-14 md:h-14 bg-white rounded-full p-1 shadow-md">
             <img
-              src="ANlogo-removebg-preview.png"
+                src={Logo}
               alt="Ananta Nethralaya Logo"
               className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
             />
