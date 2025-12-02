@@ -138,7 +138,7 @@ Message: ${formData.message || "No additional message"}
 
 Please confirm this appointment.`
 
-    const whatsappNumber = "917025195638"
+    const whatsappNumber = "918075649788"
     const encodedMessage = encodeURIComponent(whatsappMessage)
     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`
 
@@ -297,7 +297,7 @@ Please confirm this appointment.`
                       <h4 className="font-semibold text-gray-800 mb-2 text-lg">WhatsApp</h4>
                       <p className="text-gray-600 mb-3">Quick appointment booking available</p>
                       <a
-                        href="https://wa.me/917025195638"
+                        href="https://wa.me/918075649788"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 hover:scale-105 transition-all text-sm font-semibold shadow-lg hover:shadow-xl"

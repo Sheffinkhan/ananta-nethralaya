@@ -4,6 +4,7 @@
 import { Eye, Shield, Layers, Heart, Microscope, Award, Target } from "lucide-react"
 import  CLINIC_CONTENT  from "../constants/content"
 import SEO from "../components/SEO"
+import ANANTA_LOGO from "../assets/images/ANlogo.jpg"
 
 
 
@@ -58,6 +59,28 @@ const AboutPage = () => {
             </p>
           </div>
         </section>
+        {/* Our Story Section */}
+          <div className="max-w-5xl mx-auto mt-12">
+            <div className="bg-gradient-to-br from-teal-700 via-teal-800 to-teal-900 text-white p-8 md:p-12 rounded-3xl shadow-2xl border-2 border-teal-600 animate-fade-in-up">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden p-2 group shadow-lg">
+                  <img
+                    src={ANANTA_LOGO}
+                    alt="Ananta Nethralaya Logo"
+                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold">{CLINIC_CONTENT.ourStory.title}</h2>
+              </div>
+              <div className="text-gray-100 leading-relaxed text-base md:text-lg space-y-4">
+                {CLINIC_CONTENT.ourStory.content.map((paragraph, idx) => (
+                  <p key={idx}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
 
         {/* Vision, Mission, Excellence Section */}
         <section className="py-16 bg-white">
@@ -183,28 +206,7 @@ const AboutPage = () => {
             ))}
           </div>
 
-          {/* Our Story Section */}
-          <div className="max-w-5xl mx-auto mt-12">
-            <div className="bg-gradient-to-br from-teal-700 via-teal-800 to-teal-900 text-white p-8 md:p-12 rounded-3xl shadow-2xl border-2 border-teal-600 animate-fade-in-up">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden p-2 group shadow-lg">
-                  <img
-                    src="ANlogo.jpg"
-                    alt="Ananta Nethralaya Logo"
-                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <h2 className="text-2xl md:text-3xl font-bold">{CLINIC_CONTENT.ourStory.title}</h2>
-              </div>
-              <div className="text-gray-100 leading-relaxed text-base md:text-lg space-y-4">
-                {CLINIC_CONTENT.ourStory.content.map((paragraph, idx) => (
-                  <p key={idx}>
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </div>
+          
         </div>
       </section>
 

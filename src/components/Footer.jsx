@@ -1,5 +1,6 @@
 import { Phone, Mail, MapPin, Facebook, Instagram, Clock } from "lucide-react";
 import { Link } from "../utils/Router";
+import FooterLogo from "../assets/images/Footer.JPG";
 
 const Footer = () => {
   return (
@@ -9,7 +10,7 @@ const Footer = () => {
           {/* About Section with Logo */}
           <div className="space-y-4 flex items-center md:items-start">
             <img
-              src="Footer.JPG"
+              src={FooterLogo}
               alt="MCS Ananta Nethralaya"
               className="h-16 md:h-20 w-auto object-contain hover:scale-105 transition-transform duration-300"
             />

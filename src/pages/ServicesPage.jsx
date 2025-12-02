@@ -1,23 +1,38 @@
-// src/pages/ServicesPage.jsx
-import {
-  Eye,
-  Smiley,
-  Flame,
-  CircleWavyWarning,
-  Brain,
-  Drop,
-  UsersThree,
-} from "phosphor-react";
-
-import { ChevronRight } from "lucide-react";
+import { 
+  ChevronRight, 
+  Smile, 
+  Flame, 
+  TriangleAlert, 
+  Brain, 
+  Droplet, 
+  Users 
+} from "lucide-react";
 import { Link } from "../utils/Router";
 import SEO from "../components/SEO";
 
 // ------------------------------------------------------------
-// PREMIUM CUSTOM SVG ICONS (NEW Retina, Glaucoma, Refractive)
+// PREMIUM CUSTOM SVG ICONS (Medical-Grade Designs)
 // ------------------------------------------------------------
 
-// ⭐ NEW RETINA ICON (Different from HomePage Retina)
+// Simple blank eye shape for Premium Cataract Surgery
+const CataractIcon = ({ size = 28, className = "" }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    {/* Simple eye outline - no pupil/iris */}
+    <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z" />
+  </svg>
+);
+
+// Eyeball with optic nerve and blood vessels
 const RetinaIcon = ({ size = 28, className = "" }) => (
   <svg
     width={size}
@@ -30,15 +45,24 @@ const RetinaIcon = ({ size = 28, className = "" }) => (
     strokeLinejoin="round"
     className={className}
   >
-    <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z" />
+    {/* Eyeball */}
+    <circle cx="12" cy="12" r="8" />
+    
+    {/* Optic nerve extending from back */}
+    <path d="M18 16l3 3" />
+    <path d="M18.5 14.5l3.5 2" />
+    <path d="M19 13l2.5 0.5" />
+    
+    {/* Blood vessels/nerves */}
+    <path d="M12 4c-1 0.5-2 2-2 4" />
+    <path d="M12 4c1 0.5 2 2 2 4" />
+    
+    {/* Retinal detail */}
     <circle cx="12" cy="12" r="3" />
-    <path d="M12 9v-3" />
-    <path d="M12 18v-3" />
-    <path d="M15 12h3" />
-    <path d="M6 12h3" />
   </svg>
 );
 
+// Glaucoma icon with pressure indicators
 const GlaucomaIcon = ({ size = 28, className = "" }) => (
   <svg
     width={size}
@@ -46,26 +70,26 @@ const GlaucomaIcon = ({ size = 28, className = "" }) => (
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.7"
+    strokeWidth="1.8"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
   >
-    {/* Eye outline */}
-    <path d="M2 12c3 -5 7 -8 10 -8s7 3 10 8c-3 5 -7 8 -10 8s-7 -3 -10 -8z" />
-
-    {/* Optic nerve cupping (larger inner cup) */}
+    {/* Main eye circle */}
+    <circle cx="12" cy="12" r="8" />
+    
+    {/* Optic disc cupping */}
     <circle cx="12" cy="12" r="3.5" />
-    <circle cx="12" cy="12" r="1.8" />
-
-    {/* Radial pressure lines (IOP increase) */}
-    <path d="M12 3.5v2" />
-    <path d="M12 18.5v2" />
-    <path d="M4.5 12h2" />
-    <path d="M17.5 12h2" />
+    
+    {/* Pressure measurement lines (tonometry) */}
+    <path d="M12 2v3" />
+    <path d="M12 19v3" />
+    <path d="M2 12h3" />
+    <path d="M19 12h3" />
+    <path d="M5.6 5.6l2.1 2.1" />
+    <path d="M16.3 16.3l2.1 2.1" />
   </svg>
 );
-
 
 const RefractiveIcon = ({ size = 28, className = "" }) => (
   <svg
@@ -101,7 +125,7 @@ const ServicesPage = () => {
     {
       id: 1,
       title: "Premium Cataract Surgery",
-      icon: Eye,
+      icon: CataractIcon,
       description:
         "Experience crystal-clear vision through advanced micro-incision painless, sutureless cataract surgery using premium intraocular lenses (IOLs). Personalized lens options for your unique visual needs.",
       features: [
@@ -115,7 +139,7 @@ const ServicesPage = () => {
     {
       id: 2,
       title: "Retina & Vitreous Services",
-      icon: RetinaIcon, // ⭐ NEW Retina icon applied here
+      icon: RetinaIcon,
       description:
         "State-of-the-art diagnostics and surgical care for retinal diseases, including diabetic retinopathy, macular disorders, retinal detachment, and vitreoretinal surgeries.",
       features: [
@@ -143,7 +167,7 @@ const ServicesPage = () => {
     {
       id: 4,
       title: "ROP (Retinopathy of Prematurity) Screening & Treatment",
-      icon: Smiley,
+      icon: Smile,
       description:
         "Specialized retinal screening and laser therapy for premature infants, ensuring timely intervention to safeguard lifelong vision.",
       features: [
@@ -171,7 +195,7 @@ const ServicesPage = () => {
     {
       id: 6,
       title: "Ocular Trauma Care",
-      icon: CircleWavyWarning,
+      icon: TriangleAlert,
       description:
         "Emergency management for ocular injuries, including corneal, anterior segment, and retinal trauma — restoring both structure and sight.",
       features: [
@@ -199,7 +223,7 @@ const ServicesPage = () => {
     {
       id: 8,
       title: "Dry Eye & Ocular Surface Disorders",
-      icon: Drop,
+      icon: Droplet,
       description:
         "Advanced diagnostics and individualized treatment protocols for dry eye syndrome and ocular surface diseases, combining comfort with long-term relief.",
       features: [
@@ -227,7 +251,7 @@ const ServicesPage = () => {
     {
       id: 10,
       title: "Comprehensive Eye Care for All Ages",
-      icon: UsersThree,
+      icon: Users,
       description:
         "From pediatric eye check-ups to senior eye health, we provide preventive, diagnostic, and therapeutic eye care under one roof.",
       features: [
@@ -318,7 +342,7 @@ const ServicesPage = () => {
                 className="inline-flex items-center bg-gradient-to-r from-teal-700 to-teal-800 text-white px-8 md:px-10 py-3 md:py-4 rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg font-semibold text-base md:text-lg"
               >
                 Book a Consultation
-                <ChevronRight className="ml-2"size={20}/>
+                <ChevronRight className="ml-2" size={20} />
               </Link>
             </div>
           </div>
