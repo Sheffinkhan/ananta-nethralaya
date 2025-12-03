@@ -1,24 +1,27 @@
 // src/pages/DoctorsPage.jsx
-import { Users, ChevronRight } from "lucide-react"
-import { Link } from "../utils/Router"
-import SEO from "../components/SEO"
-import DrAshwinPhoto from "../assets/images/DrAshwinCSomarajan.jpg"
+import { Users, ChevronRight } from "lucide-react";
+import { Link } from "../utils/Router";
+import SEO from "../components/SEO";
+import DrAshwinPhoto from "../assets/images/DrAshwinCSomarajan.jpg";
 
 const DoctorsPage = () => {
   return (
     <>
       <SEO
-        title="Dr. Ashwin Cherusseril Somarajan - Vitreo-Retinal & Cataract Surgeon | Ananta Nethralaya"
-        description="Meet Dr. Ashwin Cherusseril Somarajan — MBBS, DNB (Sankara Nethralaya), MNAMS, FVRS. Expert Vitreo-Retinal & Cataract Surgeon with 8+ years of experience and over 6000 successful eye surgeries in Kerala."
-        keywords="Dr Ashwin Somarajan, eye surgeon Kerala, retina specialist Kerala, cataract surgeon Muvattupuzha, vitreoretinal surgeon, Sankara Nethralaya alumni, eye doctor Kerala"
+        title="Dr. Ashwin Cherusseril Somarajan - Retina & Cataract Surgeon | Ananta Nethralaya"
+        description="Meet Dr. Ashwin Cherusseril Somarajan — MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS, FAICO, MRCS (Glasgow). Founder & Medical Director of Ananta Nethralaya with 8+ years of experience and over 6000 successful eye surgeries in Kerala."
+        keywords="Dr Ashwin Somarajan, Dr Ashwin Cherusseril Somarajan, eye surgeon Kerala, retina specialist Kerala, cataract surgeon Muvattupuzha, vitreoretinal surgeon, Sankara Nethralaya alumni, MRCS Glasgow, FAICO, eye doctor Kerala, Ananta Nethralaya founder"
         canonical="https://www.anantanethralaya.org/doctors"
       />
       <div className="pt-20">
         <section className="py-20 bg-gradient-to-br from-slate-900 via-teal-900 to-slate-900">
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">Meet Our Expert</h1>
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+              Meet Our Expert
+            </h1>
             <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-              Delivering advanced and compassionate eye care with precision, expertise, and empathy
+              Delivering advanced and compassionate eye care with precision,
+              expertise, and empathy
             </p>
           </div>
         </section>
@@ -33,7 +36,7 @@ const DoctorsPage = () => {
                     <div className="w-72 h-96 lg:w-80 lg:h-[420px] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 group">
                       <img
                         src={DrAshwinPhoto}
-                        alt="Dr. Ashwin Cherusseril Somarajan - Consultant Vitreo-Retinal & Cataract Surgeon"
+                        alt="Dr. Ashwin Cherusseril Somarajan - Consultant Retina & Cataract Surgeon"
                         className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                         loading="lazy"
                       />
@@ -46,39 +49,52 @@ const DoctorsPage = () => {
                       Dr. Ashwin Cherusseril Somarajan
                     </h2>
                     <p className="text-amber-600 font-semibold mb-2 text-base lg:text-lg">
-                      MBBS, DNB (Sankara Nethralaya), MNAMS, FVRS
+                      MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS, FAICO, MRCS (Glasgow)
                     </p>
-                    <p className="text-teal-700 font-semibold mb-6 text-sm lg:text-base">
-                      Consultant Vitreo-Retinal & Cataract Surgeon
+                    <p className="text-teal-700 font-semibold mb-2 text-sm lg:text-base">
+                      Consultant Retina & Cataract Surgeon
+                    </p>
+                    <p className="text-teal-600 font-medium mb-6 text-sm lg:text-base">
+                      Founder & Medical Director - Ananta Nethralaya
                     </p>
 
                     <div className="space-y-4 text-gray-700 text-sm lg:text-base leading-relaxed">
                       <p>
-                        Dr. Ashwin Cherusseril Somarajan is a passionate and skilled
-                        Vitreoretinal and Cataract Surgeon with over{" "}
+                        Dr. Ashwin Cherusseril Somarajan is a passionate and
+                        skilled Vitreoretinal and Cataract Surgeon with over{" "}
                         <strong>8 years of experience</strong> in delivering
                         advanced and compassionate eye care. He completed his{" "}
                         <strong>DNB Ophthalmology</strong> from{" "}
                         <strong>Sankara Nethralaya, Kolkata</strong> — one of
                         India's top three eye institutes — and pursued a{" "}
                         <strong>long-term surgical retina fellowship</strong> at
-                        Chaithanya Eye Hospital, Trivandrum, a premier center for
-                        retinal surgery and training.
+                        Chaithanya Eye Hospital, Trivandrum, a premier center
+                        for retinal surgery and training.
                       </p>
 
                       <p>
                         With extensive surgical expertise, Dr. Ashwin has
                         successfully performed over{" "}
-                        <strong>5000 topical phacoemulsification surgeries</strong>{" "}
+                        <strong>
+                          5000 topical phacoemulsification surgeries
+                        </strong>{" "}
                         (including premium IOL implants) and more than{" "}
                         <strong>1000 retinal surgeries</strong>, combining
                         precision, technology, and empathy to achieve optimal
                         outcomes for his patients.
                       </p>
 
+                      <p>
+                        As the <strong>Founder & Medical Director of Ananta Nethralaya</strong>, 
+                        Dr. Ashwin has established a center of excellence dedicated to 
+                        providing world-class eye care with a focus on retina and cataract 
+                        services, bringing advanced ophthalmology to the region with 
+                        compassion and clinical excellence.
+                      </p>
+
                       <p className="italic text-teal-800 font-medium text-base lg:text-lg pt-2">
-                        "Every patient deserves care with passion, compassion, and
-                        kindness."
+                        "Every patient deserves care with passion, compassion,
+                        and kindness."
                       </p>
                     </div>
 
@@ -95,7 +111,9 @@ const DoctorsPage = () => {
 
             <div className="max-w-4xl mx-auto mt-16">
               <div className="bg-gradient-to-br from-teal-700 via-teal-800 to-teal-900 text-white p-10 rounded-3xl shadow-2xl border border-teal-600">
-                <h3 className="text-3xl font-bold mb-6">Professional Expertise</h3>
+                <h3 className="text-3xl font-bold mb-6">
+                  Professional Expertise
+                </h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="group">
                     <h4 className="font-semibold text-amber-400 mb-3 text-lg group-hover:text-amber-300 transition-colors">
@@ -150,7 +168,7 @@ const DoctorsPage = () => {
         </section>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default DoctorsPage
+export default DoctorsPage;

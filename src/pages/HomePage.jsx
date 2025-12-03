@@ -3,11 +3,8 @@ import { useEffect, useState } from "react";
 import SEO from "../components/SEO";
 import DrAshwinPhoto from "../assets/images/DrAshwinCSomarajan.jpg";
 import logo from "../assets/images/ANlogo-removebg-preview.png";
-import  { CataractIcon } from "../constants/icons";
+import { CataractIcon } from "../constants/icons";
 import { DiabeticRetinaIcon } from "../constants/icons";
-
-
-
 
 import {
   ChevronRight,
@@ -16,7 +13,7 @@ import {
   Eye,
   Cpu,
   Smile,
-  Users
+  Users,
 } from "lucide-react";
 
 import { Link } from "../utils/Router";
@@ -53,7 +50,7 @@ const HomePage = () => {
   const serviceIcons = [
     CataractIcon, // Cataract
     RetinaIcon, // Retina
-    Users, 
+    Users,
     DiabeticRetinaIcon, // Diabetic Retina
   ];
 
@@ -71,7 +68,7 @@ const HomePage = () => {
         ogImage="ANlogo.jpg"
         canonical="https://www.anantanethralaya.org/"
       />
-      
+
       {/* ============================ HERO ============================ */}
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-teal-900 to-slate-900 overflow-hidden pt-20">
         <div className="absolute inset-0 opacity-20">
@@ -91,7 +88,9 @@ const HomePage = () => {
             {/* Logo with Professional Animations */}
             <div
               className="mb-8 flex justify-center"
-              style={{ animation: `logoFloat 3s ease-in-out infinite, fadeInDown 0.8s ease-out` }}
+              style={{
+                animation: `logoFloat 3s ease-in-out infinite, fadeInDown 0.8s ease-out`,
+              }}
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-teal-400 rounded-full blur-2xl opacity-50 animate-pulse"></div>
@@ -247,13 +246,17 @@ const HomePage = () => {
               {/* Text Content - Takes 3 columns */}
               <div className="md:col-span-3 text-white p-8 md:p-12 lg:p-16">
                 <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                  Meet Dr. Ashwin C. Somarajan
+                  Meet Dr. Ashwin Cherusseril Somarajan
                 </h2>
                 <p className="text-amber-300 mb-2 leading-relaxed font-semibold text-base lg:text-lg">
-                  MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS, Cataract & Retina Surgeon
+                  MBBS, DNB Ophthalmology (Sankara Nethralaya), MNAMS, FVRS,
+                  FAICO, MRCS (Glasgow)
+                </p>
+                <p className="text-gray-200 mb-2 leading-relaxed text-sm lg:text-base font-medium">
+                  Consultant Retina & Cataract Surgeon
                 </p>
                 <p className="text-gray-200 mb-6 leading-relaxed text-sm lg:text-base">
-                  8+ years of expertise in ophthalmology and retina care
+                  Founder & Medical Director - Ananta Nethralaya
                 </p>
                 <Link
                   to="/doctors"

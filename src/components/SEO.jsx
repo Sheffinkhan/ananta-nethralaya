@@ -10,10 +10,11 @@ const SEO = ({
   author = "Ananta Nethralaya",
   ogImage = "ANlogo.jpg",
   canonical,
+  schemaType = "MedicalBusiness", // Can be "MedicalBusiness" or "Physician"
 }) => {
   useEffect(() => {
-    // Create schema markup inside useEffect where variables are accessible
-    const schemaMarkup = {
+    // Base schema markup for medical business
+    let schemaMarkup = {
       "@context": "https://schema.org",
       "@type": "MedicalBusiness",
       name: "Ananta Nethralaya",
@@ -30,6 +31,86 @@ const SEO = ({
       telephone: "+918075649788",
       url: "https://www.anantanethralaya.org",
     };
+
+    // If it's a doctor page, add physician schema
+    if (schemaType === "Physician") {
+      schemaMarkup = {
+        "@context": "https://schema.org",
+        "@type": "Physician",
+        name: "Dr. Ashwin Cherusseril Somarajan",
+        honorificPrefix: "Dr.",
+        givenName: "Ashwin",
+        familyName: "Somarajan",
+        additionalName: "Cherusseril",
+        jobTitle: "Consultant Retina & Cataract Surgeon",
+        description: "Founder & Medical Director - Ananta Nethralaya. Expert Vitreoretinal and Cataract Surgeon with 8+ years of experience.",
+        medicalSpecialty: [
+          "Ophthalmology",
+          "Vitreoretinal Surgery",
+          "Cataract Surgery",
+          "Retinal Surgery"
+        ],
+        hasCredential: [
+          {
+            "@type": "EducationalOccupationalCredential",
+            credentialCategory: "degree",
+            name: "MBBS"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            credentialCategory: "degree",
+            name: "DNB Ophthalmology",
+            recognizedBy: {
+              "@type": "Organization",
+              name: "Sankara Nethralaya"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            credentialCategory: "certification",
+            name: "MNAMS",
+            description: "Member of National Academy of Medical Sciences"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            credentialCategory: "fellowship",
+            name: "FVRS",
+            description: "Fellow of Vitreo Retinal Society"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            credentialCategory: "fellowship",
+            name: "FAICO",
+            description: "Fellow of All India Conjoint Board of Ophthalmologists"
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            credentialCategory: "membership",
+            name: "MRCS (Glasgow)",
+            description: "Member of Royal College of Surgeons, Glasgow"
+          }
+        ],
+        worksFor: {
+          "@type": "MedicalClinic",
+          name: "Ananta Nethralaya",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "MCS Hospital, Muvattupuzha",
+            addressLocality: "Ernakulam",
+            addressRegion: "Kerala",
+            postalCode: "686661",
+            addressCountry: "IN"
+          },
+          telephone: "+918075649788"
+        },
+        alumniOf: {
+          "@type": "Organization",
+          name: "Sankara Nethralaya, Kolkata"
+        },
+        image: ogImage,
+        url: "https://www.anantanethralaya.org/doctors"
+      };
+    }
 
     const script = document.createElement("script");
     script.type = "application/ld+json";
@@ -63,7 +144,7 @@ const SEO = ({
         script.parentNode.removeChild(script);
       }
     };
-  }, [title, description, keywords, author, ogImage, canonical]);
+  }, [title, description, keywords, author, ogImage, canonical, schemaType]);
 
   const updateMetaTag = (attr, attrValue, content) => {
     let element = document.querySelector(`meta[${attr}="${attrValue}"]`);
