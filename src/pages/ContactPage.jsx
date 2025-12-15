@@ -19,34 +19,30 @@ const ContactPage = () => {
 
   const [errors, setErrors] = useState({})
 
-  // Validation Functions
   const validatePhone = (phone) => {
     const phoneRegex = /^[6-9]\d{9}$/
     return phoneRegex.test(phone)
   }
 
   const validateEmail = (email) => {
-    if (!email) return true // Email is optional
+    if (!email) return true
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
   }
 
   const validateAge = (age) => {
-    if (!age) return true // Age is optional
+    if (!age) return true
     const ageNum = parseInt(age)
     return ageNum >= 1 && ageNum <= 120
   }
 
   const validateDate = (date) => {
-    if (!date) return true // Date is optional
+    if (!date) return true
     const selectedDate = new Date(date)
     const today = new Date()
     today.setHours(0, 0, 0, 0)
     
-    // Check if date is in the past
     if (selectedDate < today) return false
-    
-    // Check if selected date is Sunday (0 = Sunday)
     if (selectedDate.getDay() === 0) return false
     
     return true
@@ -64,36 +60,30 @@ const ContactPage = () => {
   const validateForm = () => {
     const newErrors = {}
 
-    // Full Name validation
     if (!formData.fullName.trim()) {
       newErrors.fullName = "Full name is required"
     } else if (formData.fullName.trim().length < 2) {
       newErrors.fullName = "Name must be at least 2 characters"
     }
 
-    // Phone validation
     if (!formData.phone) {
       newErrors.phone = "Phone number is required"
     } else if (!validatePhone(formData.phone)) {
       newErrors.phone = "Enter a valid 10-digit Indian mobile number"
     }
 
-    // Email validation (optional but must be valid if provided)
     if (formData.email && !validateEmail(formData.email)) {
       newErrors.email = "Enter a valid email address"
     }
 
-    // Age validation (optional but must be valid if provided)
     if (formData.age && !validateAge(formData.age)) {
       newErrors.age = "Age must be between 1 and 120"
     }
 
-    // Service validation
     if (!formData.service) {
       newErrors.service = "Please select a service"
     }
 
-    // Date validation (optional but must be future date if provided)
     if (formData.date && !validateDate(formData.date)) {
       const selectedDate = new Date(formData.date)
       if (selectedDate.getDay() === 0) {
@@ -110,9 +100,7 @@ const ContactPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    // Validate form
     if (!validateForm()) {
-      // Scroll to first error
       const firstErrorField = Object.keys(errors)[0]
       const errorElement = document.getElementsByName(firstErrorField)[0]
       if (errorElement) {
@@ -148,7 +136,6 @@ Please confirm this appointment.`
   const handleChange = (event) => {
     const { name, value } = event.target
     
-    // Clear error for this field when user starts typing
     if (errors[name]) {
       setErrors(prev => {
         const newErrors = { ...prev }
@@ -157,32 +144,21 @@ Please confirm this appointment.`
       })
     }
 
-    // Special handling for phone - only allow numbers
     if (name === 'phone') {
       const numericValue = value.replace(/\D/g, '').slice(0, 10)
-      setFormData({
-        ...formData,
-        [name]: numericValue,
-      })
+      setFormData({ ...formData, [name]: numericValue })
       return
     }
 
-    // Special handling for age - only allow numbers
     if (name === 'age') {
       const numericValue = value.replace(/\D/g, '')
       if (numericValue === '' || (parseInt(numericValue) >= 1 && parseInt(numericValue) <= 120)) {
-        setFormData({
-          ...formData,
-          [name]: numericValue,
-        })
+        setFormData({ ...formData, [name]: numericValue })
       }
       return
     }
 
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
+    setFormData({ ...formData, [name]: value })
   }
 
   const openInGoogleMaps = () => {
@@ -202,55 +178,50 @@ Please confirm this appointment.`
         canonical="https://www.anantanethralaya.org/contact"
       />
 
-      <div className="pt-20">
-        {/* Header Section */}
-        <section className="py-20 bg-gradient-to-br from-teal-700 to-teal-900 relative overflow-hidden">
+      <div className="pt-16 sm:pt-20">
+        {/* Header */}
+        <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-teal-700 to-teal-900 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-10 left-10 w-32 h-32 bg-amber-400 rounded-full animate-float"></div>
-            <div className="absolute bottom-20 right-20 w-40 h-40 bg-teal-300 rounded-full animate-float" style={{ animationDelay: "1s" }}></div>
-            <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-amber-300 rounded-full animate-float" style={{ animationDelay: "2s" }}></div>
+            <div className="absolute top-5 sm:top-10 left-5 sm:left-10 w-20 sm:w-32 h-20 sm:h-32 bg-amber-400 rounded-full animate-float"></div>
+            <div className="absolute bottom-10 sm:bottom-20 right-10 sm:right-20 w-28 sm:w-40 h-28 sm:h-40 bg-teal-300 rounded-full animate-float" style={{ animationDelay: "1s" }}></div>
           </div>
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 animate-fade-in-up">Get In Touch</h1>
-            <p className="text-xl text-gray-200 max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+          <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6">Get In Touch</h1>
+            <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-3xl mx-auto px-4">
               Visit us or schedule an appointment today
             </p>
           </div>
         </section>
 
         {/* Contact Section */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <section className="py-12 sm:py-16 md:py-20 bg-white">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 max-w-6xl mx-auto">
               {/* Contact Info */}
-              <div className="bg-gradient-to-br from-teal-50 to-amber-50 rounded-2xl shadow-2xl p-8 hover-lift stagger-item">
-                <h3 className="text-3xl font-bold text-teal-700 mb-8">Contact Information</h3>
+              <div className="bg-gradient-to-br from-teal-50 to-amber-50 rounded-xl sm:rounded-2xl shadow-2xl p-6 sm:p-8">
+                <h3 className="text-2xl sm:text-3xl font-bold text-teal-700 mb-6 sm:mb-8">Contact Information</h3>
 
-                <div className="space-y-6">
-                  {/* Address */}
-                  <div className="flex items-start space-x-4 hover-scale transition-all duration-300">
-                    <div className="w-12 h-12 bg-teal-700 rounded-full flex items-center justify-center flex-shrink-0 animate-pulse-glow">
-                      <MapPin className="text-amber-400" size={24} />
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="flex items-start space-x-3 sm:space-x-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-teal-700 rounded-full flex items-center justify-center flex-shrink-0">
+                      <MapPin className="text-amber-400" size={20} />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-800 mb-2 text-lg">Address</h4>
-                      <p className="text-gray-600 leading-relaxed">
-                        MCS - Ananta Nethralaya, <br />
-                        MCS Hospital, <br />
-                        Muvattupuzha, <br />
-                        Ernakulam, Kerala - 686661
+                      <h4 className="font-semibold text-gray-800 mb-1 text-sm sm:text-base">Address</h4>
+                      <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        MCS - Ananta Nethralaya, MCS Hospital,<br />
+                        Muvattupuzha, Ernakulam, Kerala - 686661
                       </p>
                     </div>
                   </div>
 
-                  {/* Phone */}
-                  <div className="flex items-start space-x-4 hover-scale transition-all duration-300">
-                    <div className="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0 animate-pulse-glow" style={{ animationDelay: "0.5s" }}>
-                      <Phone className="text-white" size={24} />
+                  <div className="flex items-start space-x-3 sm:space-x-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Phone className="text-white" size={20} />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-800 mb-2 text-lg">Contact</h4>
-                      <p className="text-gray-600">
+                      <h4 className="font-semibold text-gray-800 mb-1 text-sm sm:text-base">Contact</h4>
+                      <p className="text-xs sm:text-sm text-gray-600">
                         <a href="tel:+918075649788" className="hover:text-teal-700 transition-colors">
                           +91 8075649788
                         </a>
@@ -258,14 +229,13 @@ Please confirm this appointment.`
                     </div>
                   </div>
 
-                  {/* Email */}
-                  <div className="flex items-start space-x-4 hover-scale transition-all duration-300">
-                    <div className="w-12 h-12 bg-teal-700 rounded-full flex items-center justify-center flex-shrink-0 animate-pulse-glow" style={{ animationDelay: "1s" }}>
-                      <Mail className="text-amber-400" size={24} />
+                  <div className="flex items-start space-x-3 sm:space-x-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-teal-700 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Mail className="text-amber-400" size={20} />
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-800 mb-2 text-lg">Email</h4>
-                      <p className="text-gray-600">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold text-gray-800 mb-1 text-sm sm:text-base">Email</h4>
+                      <p className="text-xs sm:text-sm text-gray-600 break-words">
                         <a href="mailto:anantanethralaya@gmail.com" className="hover:text-teal-700 transition-colors">
                           anantanethralaya@gmail.com
                         </a>
@@ -273,36 +243,20 @@ Please confirm this appointment.`
                     </div>
                   </div>
 
-                  {/* Website */}
-                  <div className="flex items-start space-x-4 hover-scale transition-all duration-300">
-                    <div className="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0 animate-pulse-glow" style={{ animationDelay: "1.5s" }}>
-                      <Globe className="text-white" size={24} />
+                  <div className="flex items-start space-x-3 sm:space-x-4 pt-4 border-t-2 border-teal-200">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <MessageCircle className="text-white" size={20} />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-800 mb-2 text-lg">Website</h4>
-                      <p className="text-gray-600">
-                        <a href="https://www.anantanethralaya.org" target="_blank" rel="noopener noreferrer" className="hover:text-teal-700 transition-colors">
-                          www.anantanethralaya.org
-                        </a>
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* WhatsApp */}
-                  <div className="flex items-start space-x-4 pt-4 border-t-2 border-teal-200 hover-scale transition-all duration-300">
-                    <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 animate-pulse-glow" style={{ animationDelay: "2s" }}>
-                      <MessageCircle className="text-white" size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-800 mb-2 text-lg">WhatsApp</h4>
-                      <p className="text-gray-600 mb-3">Quick appointment booking available</p>
+                      <h4 className="font-semibold text-gray-800 mb-1 text-sm sm:text-base">WhatsApp</h4>
+                      <p className="text-xs sm:text-sm text-gray-600 mb-2">Quick appointment booking</p>
                       <a
                         href="https://wa.me/918075649788"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 hover:scale-105 transition-all text-sm font-semibold shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center bg-green-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full hover:bg-green-600 hover:scale-105 transition-all text-xs sm:text-sm font-semibold shadow-lg"
                       >
-                        <MessageCircle className="mr-2" size={16} />
+                        <MessageCircle className="mr-1 sm:mr-2" size={14} />
                         Chat on WhatsApp
                       </a>
                     </div>
@@ -310,16 +264,12 @@ Please confirm this appointment.`
                 </div>
               </div>
 
-              {/* Appointment Form */}
-              <div
-                className="bg-white rounded-2xl shadow-2xl p-8 border-2 border-teal-100 hover-lift stagger-item"
-                style={{ animationDelay: "0.2s" }}
-              >
-                <h3 className="text-3xl font-bold text-teal-700 mb-8">Book Appointment</h3>
-                <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-                  {/* Full Name */}
+              {/* Form */}
+              <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-6 sm:p-8 border-2 border-teal-100">
+                <h3 className="text-2xl sm:text-3xl font-bold text-teal-700 mb-6 sm:mb-8">Book Appointment</h3>
+                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4" noValidate>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">
                       Full Name <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -328,18 +278,15 @@ Please confirm this appointment.`
                       value={formData.fullName}
                       onChange={handleChange}
                       placeholder="Enter your full name"
-                      className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 ${
+                      className={`w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 ${
                         errors.fullName ? 'border-red-500' : 'border-gray-300'
                       }`}
                     />
-                    {errors.fullName && (
-                      <p className="mt-1 text-sm text-red-500">{errors.fullName}</p>
-                    )}
+                    {errors.fullName && <p className="mt-1 text-xs text-red-500">{errors.fullName}</p>}
                   </div>
 
-                  {/* Phone Number */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">
                       Phone Number <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -347,46 +294,40 @@ Please confirm this appointment.`
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="Enter 10-digit mobile number"
+                      placeholder="10-digit mobile"
                       maxLength="10"
-                      className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 ${
+                      className={`w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 ${
                         errors.phone ? 'border-red-500' : 'border-gray-300'
                       }`}
                     />
-                    {errors.phone && (
-                      <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
-                    )}
+                    {errors.phone && <p className="mt-1 text-xs text-red-500">{errors.phone}</p>}
                   </div>
 
-                  {/* Email */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                    <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Email Address</label>
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="your.email@example.com"
-                      className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 ${
+                      className={`w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 ${
                         errors.email ? 'border-red-500' : 'border-gray-300'
                       }`}
                     />
-                    {errors.email && (
-                      <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-                    )}
+                    {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
                   </div>
 
-                  {/* Gender & Age */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Gender</label>
+                      <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Gender</label>
                       <select
                         name="gender"
                         value={formData.gender}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 text-gray-700 bg-white"
+                        className="w-full px-2 sm:px-3 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white"
                       >
-                        <option value="">Select Gender</option>
+                        <option value="">Select</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
@@ -394,7 +335,7 @@ Please confirm this appointment.`
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Age</label>
+                      <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Age</label>
                       <input
                         type="text"
                         inputMode="numeric"
@@ -403,26 +344,23 @@ Please confirm this appointment.`
                         onChange={handleChange}
                         placeholder="Age"
                         maxLength="3"
-                        className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 ${
+                        className={`w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 ${
                           errors.age ? 'border-red-500' : 'border-gray-300'
                         }`}
                       />
-                      {errors.age && (
-                        <p className="mt-1 text-xs text-red-500">{errors.age}</p>
-                      )}
+                      {errors.age && <p className="mt-1 text-xs text-red-500">{errors.age}</p>}
                     </div>
                   </div>
 
-                  {/* Service */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">
                       Select Service <span className="text-red-500">*</span>
                     </label>
                     <select
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 text-gray-700 bg-white ${
+                      className={`w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white ${
                         errors.service ? 'border-red-500' : 'border-gray-300'
                       }`}
                     >
@@ -430,187 +368,144 @@ Please confirm this appointment.`
                       <option value="Premium Cataract Surgery">Premium Cataract Surgery</option>
                       <option value="Retina & Vitreous Services">Retina & Vitreous Services</option>
                       <option value="Glaucoma Management">Glaucoma Management</option>
-                      <option value="ROP Screening & Treatment">ROP Screening & Treatment</option>
-                      <option value="Uvea & Inflammatory Eye Diseases">Uvea & Inflammatory Eye Diseases</option>
+                      <option value="ROP Screening & Treatment">ROP Screening</option>
+                      <option value="Uvea & Inflammatory Eye Diseases">Uvea & Inflammatory</option>
                       <option value="Ocular Trauma Care">Ocular Trauma Care</option>
                       <option value="Neuro-Ophthalmology">Neuro-Ophthalmology</option>
-                      <option value="Dry Eye & Ocular Surface Disorders">Dry Eye & Ocular Surface Disorders</option>
-                      <option value="Refractive Services (LASIK & Beyond)">Refractive Services (LASIK & Beyond)</option>
-                      <option value="Comprehensive Eye Care for All Ages">Comprehensive Eye Care for All Ages</option>
+                      <option value="Dry Eye & Ocular Surface Disorders">Dry Eye Care</option>
+                      <option value="Refractive Services (LASIK & Beyond)">Refractive Services</option>
+                      <option value="Comprehensive Eye Care for All Ages">Comprehensive Eye Care</option>
                     </select>
-                    {errors.service && (
-                      <p className="mt-1 text-sm text-red-500">{errors.service}</p>
-                    )}
+                    {errors.service && <p className="mt-1 text-xs text-red-500">{errors.service}</p>}
                   </div>
 
-                  {/* Date */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Preferred Date</label>
+                    <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Preferred Date</label>
                     <input
                       type="date"
                       name="date"
                       value={formData.date}
                       onChange={handleChange}
                       min={new Date().toISOString().split("T")[0]}
-                      className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all hover:border-teal-400 ${
+                      className={`w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 ${
                         errors.date ? 'border-red-500' : 'border-gray-300'
                       }`}
                     />
-                    {errors.date && (
-                      <p className="mt-1 text-sm text-red-500">{errors.date}</p>
-                    )}
-                    <p className="mt-1 text-xs text-teal-600 font-medium">Consultation Hours: Monday - Saturday, 9:00 AM - 5:00 PM</p>
+                    {errors.date && <p className="mt-1 text-xs text-red-500">{errors.date}</p>}
+                    <p className="mt-1 text-xs text-teal-600">Mon-Sat, 9AM-5PM</p>
                   </div>
 
-                  {/* Message */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Message (Optional)</label>
+                    <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5">Message (Optional)</label>
                     <textarea
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
-                      placeholder="Any specific concerns or questions?"
+                      placeholder="Any concerns?"
                       rows="3"
                       maxLength="500"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all resize-none hover:border-teal-400"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
                     ></textarea>
-                    <p className="mt-1 text-xs text-gray-500 text-right">
-                      {formData.message.length}/500 characters
-                    </p>
+                    <p className="mt-1 text-xs text-gray-500 text-right">{formData.message.length}/500</p>
                   </div>
 
-                  {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full bg-green-500 text-white py-4 rounded-lg hover:bg-green-600 transition-all font-semibold text-lg shadow-lg hover:shadow-2xl hover:scale-105 flex items-center justify-center group"
+                    className="w-full bg-green-500 text-white py-3 sm:py-3.5 rounded-lg hover:bg-green-600 transition-all font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl hover:scale-105 flex items-center justify-center group"
                   >
-                    <MessageCircle className="mr-2 group-hover:scale-110 group-hover:rotate-12 transition-transform" size={24} />
+                    <MessageCircle className="mr-2 group-hover:scale-110 transition-transform" size={18} />
                     Book via WhatsApp
                   </button>
 
-                  <p className="text-sm text-gray-500 text-center mt-2">
-                    <span className="text-red-500">*</span> Required fields. You'll be redirected to WhatsApp to confirm your appointment.
+                  <p className="text-xs text-gray-500 text-center">
+                    <span className="text-red-500">*</span> Required fields
                   </p>
                 </form>
               </div>
             </div>
 
-            {/* Map Section */}
-            <div className="max-w-6xl mx-auto mt-16 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-              <div className="text-center mb-8">
-                <h3 className="text-3xl md:text-4xl font-bold text-teal-700 mb-3">Find Us</h3>
-                <p className="text-gray-600">MCS Hospital, Muvattupuzha, Kerala</p>
+            {/* Map */}
+            <div className="max-w-6xl mx-auto mt-10 sm:mt-12 md:mt-16">
+              <div className="text-center mb-6 sm:mb-8">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-teal-700 mb-2">Find Us</h3>
+                <p className="text-sm sm:text-base text-gray-600">MCS Hospital, Muvattupuzha</p>
               </div>
 
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-teal-100 hover:border-teal-300 transition-all duration-300 group">
-                <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-teal-500/20 to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-amber-500/20 to-transparent z-10 pointer-events-none"></div>
-
+              <div className="relative rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border-2 sm:border-4 border-teal-100">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d694.6087231162195!2d76.58789641593297!3d9.992033615752066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b07e77bf1f9fd5f%3A0xfb6ce3bdd67fad42!2sMCS%20Hospital%2C%20Muvattupuzha!5e0!3m2!1sen!2sin!4v1762707443342!5m2!1sen!2sin"
                   width="100%"
-                  height="500"
+                  height="450"
                   style={{ border: 0 }}
                   allowFullScreen=""
                   loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="MCS Hospital - Ananta Nethralaya Location"
-                  className="grayscale-[0.2] hover:grayscale-0 transition-all duration-500"
+                  title="MCS Hospital Location"
+                  className="min-h-[300px] sm:min-h-[400px] md:min-h-[450px]"
                 ></iframe>
 
-                <div className="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                <div className="absolute top-2 sm:top-4 right-2 sm:right-4 flex flex-col gap-1.5 sm:gap-2 z-20">
                   <button
                     onClick={openInGoogleMaps}
-                    className="bg-white text-teal-700 px-4 py-2 rounded-lg shadow-lg hover:bg-teal-700 hover:text-white transition-all flex items-center gap-2 text-sm font-semibold group/btn"
-                    aria-label="Open in Google Maps"
+                    className="bg-white text-teal-700 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg shadow-lg hover:bg-teal-700 hover:text-white transition-all flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-semibold"
                   >
-                    <ExternalLink size={16} className="group-hover/btn:scale-110 transition-transform" />
-                    <span className="hidden md:inline">Open in Maps</span>
+                    <ExternalLink size={14} />
+                    <span className="hidden sm:inline">Open</span>
                   </button>
                   
                   <button
                     onClick={getDirections}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition-all flex items-center gap-2 text-sm font-semibold group/btn"
-                    aria-label="Get Directions"
+                    className="bg-blue-600 text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg shadow-lg hover:bg-blue-700 transition-all flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-semibold"
                   >
-                    <Navigation size={16} className="group-hover/btn:rotate-45 transition-transform" />
-                    <span className="hidden md:inline">Directions</span>
+                    <Navigation size={14} />
+                    <span className="hidden sm:inline">Directions</span>
                   </button>
-                </div>
-
-                <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg z-20 border border-teal-200">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="text-teal-600" size={20} />
-                    <div>
-                      <p className="text-xs font-semibold text-gray-700">MCS - Ananta Nethralaya</p>
-                      <p className="text-xs text-gray-600">Inside MCS Hospital Campus</p>
-                    </div>
-                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                <div className="bg-gradient-to-br from-teal-50 via-teal-100 to-cyan-100 p-6 rounded-xl hover:scale-105 transition-all duration-300 shadow-md hover:shadow-xl border-2 border-teal-200">
-                  <div className="flex items-start gap-3">
-                    <div className="w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center flex-shrink-0">
-                      <MapPin className="text-white" size={24} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6">
+                <div className="bg-gradient-to-br from-teal-50 to-cyan-100 p-4 sm:p-6 rounded-xl shadow-md border-2 border-teal-200">
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-teal-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <MapPin className="text-white" size={20} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-teal-800 mb-1">Full Address</h4>
-                      <p className="text-sm text-gray-700 leading-relaxed">
-                        MCS Hospital, Randarkara Rd,<br/>
-                        Muvattupuzha, Kerala 686673
+                      <h4 className="font-bold text-teal-800 mb-1 text-sm sm:text-base">Address</h4>
+                      <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                        MCS Hospital, Randarkara Rd,<br/>Muvattupuzha 686673
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-br from-blue-50 via-blue-100 to-indigo-100 p-6 rounded-xl hover:scale-105 transition-all duration-300 shadow-md hover:shadow-xl border-2 border-blue-200 cursor-pointer" onClick={getDirections}>
-                  <div className="flex items-start gap-3">
-                    <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Navigation className="text-white" size={24} />
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-100 p-4 sm:p-6 rounded-xl shadow-md border-2 border-blue-200 cursor-pointer" onClick={getDirections}>
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Navigation className="text-white" size={20} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-blue-800 mb-1">Easy Access</h4>
-                      <p className="text-sm text-gray-700 leading-relaxed">
-                        Well-connected by road.<br/>
+                      <h4 className="font-bold text-blue-800 mb-1 text-sm sm:text-base">Easy Access</h4>
+                      <p className="text-xs sm:text-sm text-gray-700">
+                        Well-connected by road<br/>
                         <span className="text-blue-600 font-semibold">Click for directions →</span>
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-br from-amber-50 via-amber-100 to-orange-100 p-6 rounded-xl hover:scale-105 transition-all duration-300 shadow-md hover:shadow-xl border-2 border-amber-200">
-                  <div className="flex items-start gap-3">
-                    <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Phone className="text-white" size={24} />
+                <div className="bg-gradient-to-br from-amber-50 to-orange-100 p-4 sm:p-6 rounded-xl shadow-md border-2 border-amber-200 sm:col-span-2 lg:col-span-1">
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Phone className="text-white" size={20} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-amber-800 mb-1">Need Help?</h4>
-                      <p className="text-sm text-gray-700 leading-relaxed">
-                        Call us for directions<br/>
+                      <h4 className="font-bold text-amber-800 mb-1 text-sm sm:text-base">Need Help?</h4>
+                      <p className="text-xs sm:text-sm text-gray-700">
+                        Call for directions<br/>
                         <a href="tel:+918075649788" className="text-amber-600 font-semibold hover:underline">
                           +91 8075649788
                         </a>
                       </p>
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-6 bg-gradient-to-r from-teal-600 to-teal-800 text-white p-6 rounded-xl shadow-lg">
-                <h4 className="font-bold text-lg mb-3 flex items-center gap-2">
-                  <MapPin size={20} />
-                  Nearby Landmarks
-                </h4>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="font-semibold mb-1">📍 Main Building:</p>
-                    <p className="text-teal-100">Located inside MCS Hospital complex on Randarkara Road</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold mb-1">🚗 Parking:</p>
-                    <p className="text-teal-100">Ample parking available within hospital premises</p>
                   </div>
                 </div>
               </div>
